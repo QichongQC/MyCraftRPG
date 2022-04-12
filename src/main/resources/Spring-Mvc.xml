@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <!--视图解析器-->
+    <!--使用ThymeleafViewResolver来作为视图解析器(不使用默认的InternalResourceViewResolver)-->
+    <bean id="thymeleafViewResolver"  class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
+        <property name="order" value="1"></property>
+        <property name="characterEncoding" value="utf-8"></property>
+        <property name="templateEngine">
+            <bean class="org.thymeleaf.spring5.SpringTemplateEngine">
+                <property name="templateResolver">
+                    <bean class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
+                        <!--视图前缀-->
+                        <property name="prefix" value="/WEB-INF/pages/"></property>
+
+                        <!--视图后缀-->
+                        <property name="suffix" value=".html"></property>
+                        <property name="templateMode" value="HTML5"></property>
+                        <property name="characterEncoding" value="utf-8"></property>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+    <!-- JSP View Resolver -->
+    <bean id="viewResolver"
+            class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+
+        <!--只有在ViewResolver配置的viewClass中重写了 checkResource 才可以配置多个解析器。-->
+
+        <property name="viewClass" value="Common.JspResourceView"></property>
+        <property name="prefix" value="/WEB-INF/pages/">
+        </property>
+        <property name="suffix" value=".jsp">
+        </property>
+        <property name="order" value="0" />
+    </bean>
+
+
+    <!--扫描包-->
+    <context:component-scan base-package="qc.MyCraft.Controller"></context:component-scan>
+
+    <!--当控制器方法中，仅仅用来实现页面跳转，即只需要设置视图名称时，可以将处理器方法使用view-controller标签进行表示-->
+    <!--
+    path：设置处理的请求地址
+    view-name：设置请求地址所对应的视图名称
+    -->
+    <!--如果加了这个，会导致@RequestMapping无法使用
+    因为RequestMappingHandlerAdaptor被替换成了SimpleMappingAdaptor-->
+<!--    <mvc:view-controller path="/testpath" view-name="testpath"></mvc:view-controller>
+    <mvc:view-controller path="/uploadPage" view-name="FileUpload/uploadFile"></mvc:view-controller>-->
+    <!--
+   处理静态资源，例如html、js、css、jpg
+  若只设置该标签，则只能访问静态资源，其他请求则无法访问
+  此时必须设置<mvc:annotation-driven/>解决问题
+    -->
+    <!--替换SimpleMappingAdaptor为 HttpRequestHandlerAdaptor
+    只能解析静态资源
+    -->
+    <mvc:default-servlet-handler/>
+    <!-- 开启mvc注解驱动
+     -->
+    <mvc:annotation-driven/>
+
+    <!--配置文件上传-->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></bean>
+
+    <!--配置拦截器-->
+<!--    <bean id="firstInterceptor" class="TestHandlerInterceptor.HandlerInterceptorDemo"></bean>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            &lt;!&ndash;/**表示匹配全部的路径| /*表示匹配下一层全部&ndash;&gt;
+            <mvc:mapping path="/**"/>
+            &lt;!&ndash;不匹配的路径&ndash;&gt;
+            <mvc:exclude-mapping path="/"/>
+            <ref bean="firstInterceptor"></ref>
+        </mvc:interceptor>
+    </mvc:interceptors>-->
+
+</beans>
