@@ -1,7 +1,10 @@
 package qc.MyCraft.dao;
 
 import Common.Search.BaseSerach;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,9 +18,11 @@ public interface Equiment {
     @Select("select * from Equiment where id = #{id}")
     public qc.MyCraft.Models.BaseModels.Equiment getEquimentById(int id);
 
+    @Insert("insert into Equiment (Etype,picture,`describe`,achieving) values (#{Etype},#{picture},#{describe},#{achieving})")
     public int addEquiment(qc.MyCraft.Models.BaseModels.Equiment equiment);
-
+    @Update("update Equiment set etype=#{etype},picture=#{picture},`describe`=#{describe},achieving=#{achieving} where id=${id}")
     public int editEquiment(qc.MyCraft.Models.BaseModels.Equiment equiment);
 
+    @Delete("delete from equiment where id =#{id}")
     public int rmEquiment(int id);
 }

@@ -21,13 +21,13 @@
     </context:component-scan>
 
     <!--这一部分是整合spring与mybatis-->
-    <!-- 配置C3P0的连接池对象 -->
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql:///mycraftrpg" />
+        <property name="url" value="jdbc:mysql:///mycraftrpg?useUnicode=true&amp;characterEncoding=UTF-8" />
         <property name="username" value="root" />
         <property name="password" value="qiujiamin233" />
+
     </bean>
     <!-- 配置SqlSession的工厂 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" >
