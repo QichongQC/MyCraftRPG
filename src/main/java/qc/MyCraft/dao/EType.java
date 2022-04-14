@@ -1,5 +1,6 @@
 package qc.MyCraft.dao;
 
+import Common.Search.BaseSerach;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -10,6 +11,9 @@ import java.util.List;
 
 @Repository
 public interface EType {
+
+
+    public List<qc.MyCraft.Models.BaseModels.EType> getEtypeListBySearch(BaseSerach serach);
 
     //获取全部的装备种类
     @Select("select * from etype")

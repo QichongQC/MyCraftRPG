@@ -9,4 +9,5 @@ public class EType {
     int id;
     String typeName;
     String introduce;
+    int TYPE;
 }

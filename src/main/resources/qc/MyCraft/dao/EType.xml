@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace指用户自定义的命名空间。 -->
+<mapper namespace="qc.MyCraft.dao.EType">
+    <!--开启二级缓存-->
+    <cache eviction="FIFO" readOnly="true"/>
+
+    <select id="getEtypeListBySearch"  resultType="qc.MyCraft.Models.BaseModels.EType">
+        select * from EType
+        <where>
+            <if test="typeName != null">
+                typeName like '%${typeName}%'
+            </if>
+            <if test="introduce != null">
+                and introduce like '%${introduce}%'
+            </if>
+        </where>
+        limit ${start} , ${pageSize}
+    </select>
+</mapper>

@@ -2,18 +2,21 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="${title}"></title>
     <link rel="stylesheet" href="../../static/js/layui-v2.6.8/layui/css/layui.css">
     <script src="../../static/js/layui-v2.6.8/layui/layui.js"></script>
 
 </head>
 <body>
-<ul class="layui-nav" lay-filter="">
-    <li th:class="${mainPage=='equipmen'}?'layui-nav-item layui-this':'layui-nav-item'"  ><a href="/">返回主页</a></li>
-    <li  class="layui-nav-item"><a href="">产品</a></li>
-</ul>
+<div class="layui-header header header-doc" style="background-color:#393D49;">
+    <div  class="layui-container">
+        <ul class="layui-nav" lay-filter="">
+            <li th:class="${mainPage=='equipmen'}?'layui-nav-item layui-this':'layui-nav-item'"  ><a href="/">装备</a></li>
+            <li  class="layui-nav-item"><a href="">产品</a></li>
+        </ul>
+
+    </div>
+</div>
 <div th:replace="${mainPage}"></div>
-
-
 </body>
 </html>

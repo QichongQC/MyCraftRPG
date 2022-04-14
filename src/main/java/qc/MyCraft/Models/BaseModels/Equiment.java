@@ -8,8 +8,9 @@ import java.lang.annotation.Annotation;
 @Data
 public class Equiment  {
 
-    int id;
-    int Etype;
+    Integer id;
+    Integer Etype;
+    String name;
     String picture;
     String describe;
     String achieving;

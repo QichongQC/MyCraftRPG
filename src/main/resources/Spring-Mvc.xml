@@ -20,6 +20,8 @@
                         <property name="suffix" value=".html"></property>
                         <property name="templateMode" value="HTML5"></property>
                         <property name="characterEncoding" value="utf-8"></property>
+
+                        <property name="cacheable" value="false"></property>
                     </bean>
                 </property>
             </bean>

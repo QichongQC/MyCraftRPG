@@ -15,6 +15,13 @@ public interface Equiment {
     //获取装备
     public List<qc.MyCraft.Models.BaseModels.Equiment> getEquimentListBySearch(BaseSerach serach);
 
+    /**
+     * 获取对应搜索条件的数据数量
+     * @param serach
+     * @return
+     */
+    public int getRecordCount(BaseSerach serach);
+
     @Select("select * from Equiment where id = #{id}")
     public qc.MyCraft.Models.BaseModels.Equiment getEquimentById(int id);
 

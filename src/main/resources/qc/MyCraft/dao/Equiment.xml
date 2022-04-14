@@ -9,7 +9,37 @@
     <select id="getEquimentListBySearch" resultType="qc.MyCraft.Models.BaseModels.Equiment" >
         select * from Equiment
         <where>
-            <if test=""></if>
+            <if test="etype != null">
+                etype = ${etype}
+            </if>
+            <if test="name != null">
+               and name like '%${name}%'
+            </if>
+            <if test="describe != null">
+                and `describe` like '%${describe}%'
+            </if>
+            <if test="achieving != null">
+                and achieving like '%${achieving}%'
+            </if>
+        </where>
+        limit ${start} , ${pageSize}
+    </select>
+
+    <select id="getRecordCount" resultType="INT">
+        select count(*) from Equiment
+        <where>
+            <if test="etype != null">
+                etype = ${etype}
+            </if>
+            <if test="name != null">
+                and name like '%${name}%'
+            </if>
+            <if test="describe != null">
+                and `describe` like '%${describe}%'
+            </if>
+            <if test="achieving != null">
+                and achieving like '%${achieving}%'
+            </if>
         </where>
     </select>
 </mapper>

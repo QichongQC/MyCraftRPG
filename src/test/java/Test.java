@@ -1,16 +1,22 @@
 import Common.Search.BaseSerach;
+import Common.Search.ETypeSearchModel;
+import Common.Search.EquimentSearchModel;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import qc.MyCraft.Models.BaseModels.EType;
 import qc.MyCraft.Models.BaseModels.Equiment;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:applicationContext.xml")
 public class Test {
+    @Autowired
+    qc.MyCraft.Service.Equiment equiment;
 
     @Autowired
     qc.MyCraft.dao.Equiment equimentDao;
@@ -32,8 +38,6 @@ public class Test {
 
         System.out.println(i);
     }
-
-
     @org.junit.Test
     public void testTypeEdit(){
         qc.MyCraft.Models.BaseModels.EType eType=new EType();
@@ -44,7 +48,6 @@ public class Test {
 
         System.out.println(i);
     }
-
     @org.junit.Test
     public void testTypeDelete(){
 
@@ -52,7 +55,6 @@ public class Test {
 
         System.out.println(i);
     }
-
     @org.junit.Test
     public void testADD_E(){
         qc.MyCraft.Models.BaseModels.Equiment equiment=new Equiment();
@@ -64,7 +66,6 @@ public class Test {
         equimentDao.addEquiment(equiment);
 
     }
-
     @org.junit.Test
     public void testEdit_E(){
         qc.MyCraft.Models.BaseModels.Equiment equiment=new Equiment();
@@ -77,7 +78,6 @@ public class Test {
         equimentDao.editEquiment(equiment);
 
     }
-
     @org.junit.Test
     public void testRm_E(){
         equimentDao.rmEquiment(3);
@@ -85,6 +85,35 @@ public class Test {
     }
     @org.junit.Test
     public void testSearch_E(){
-        System.out.println(equimentDao.getEquimentListBySearch(new BaseSerach()));
+        EquimentSearchModel instance = new EquimentSearchModel();
+        instance.setEtype(2);
+        instance.setAchieving("sb");
+        instance.setName("武器");
+        List<Equiment> equimentListBySearch = equimentDao.getEquimentListBySearch(instance);
+        System.out.println(equimentListBySearch.stream().findAny().get().getDescribe());
+    }
+
+    @org.junit.Test
+    public void TestService_Equiment(){
+        System.out.println(equiment.getEquimentById(3));
+
+    }
+    @Autowired
+    qc.MyCraft.Service.ETypeImpl eTypeService;
+    @org.junit.Test
+    public void TestService_Etype(){
+        //eTypeService.getAllEtype();
+        ETypeSearchModel esm=new ETypeSearchModel();
+        esm.setIntroduce("intro");
+        eTypeDao.getEtypeListBySearch(esm);
+    }
+
+
+    @org.junit.Test
+    public void TestRecordCount_Equiment(){
+        EquimentSearchModel equimentSearchModel = new EquimentSearchModel();
+        equimentSearchModel.setEtype(1);
+        System.out.println(equimentDao.getRecordCount(equimentSearchModel));
+
     }
 }
