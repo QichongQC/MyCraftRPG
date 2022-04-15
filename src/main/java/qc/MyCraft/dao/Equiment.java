@@ -27,7 +27,7 @@ public interface Equiment {
 
     @Insert("insert into Equiment (Etype,picture,`describe`,achieving) values (#{Etype},#{picture},#{describe},#{achieving})")
     public int addEquiment(qc.MyCraft.Models.BaseModels.Equiment equiment);
-    @Update("update Equiment set etype=#{etype},picture=#{picture},`describe`=#{describe},achieving=#{achieving} where id=${id}")
+    @Update("update Equiment set etype=#{etype},picture=#{picture},`describe`=#{describe},achieving=#{achieving},richTxt=#{richTxt} where id=${id}")
     public int editEquiment(qc.MyCraft.Models.BaseModels.Equiment equiment);
 
     @Delete("delete from equiment where id =#{id}")

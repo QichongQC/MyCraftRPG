@@ -13,7 +13,6 @@
         border: 1px solid red;
     }
 </style>
-</h1>
 <div class="layui-container">
     <div class="layui-col-md3">
         <div class="layui-panel site-menu" style="width: 235px;">
@@ -25,10 +24,10 @@
                     <hr>
                     <ul>
                         <th:block th:each="etype:${etype_list}">
-                            <li th:class="${searchModel.etype==etype.id}?'layui-menu-item-checked2':''"
-                                th:if="${etype.TYPE==0}" th:onclick="setEtype(this,[[${etype.id}]])">
+                            <li th:class="${searchModel.etype==etype.id}?'layui-menu-item-checked':''"
+                                th:if="${etype.TYPE=='0'}" th:onclick="setEtype(this,[[${etype.id}]])">
                                 <div class="layui-menu-body-title">
-                                    <span th:text="${etype.typeName}"> </span>
+                                    <span th:text="${etype.typeName}"></span>
                                     <span class="layui-font-12 layui-font-gray"> </span>
                                 </div>
                             </li>
@@ -42,7 +41,8 @@
                     <hr>
                     <ul>
                         <th:block th:each="etype:${etype_list}">
-                            <li th:if="${etype.TYPE==1}" th:onclick="setEtype(this,[[${etype.id}]])">
+                            <li th:class="${searchModel.etype==etype.id}?'layui-menu-item-checked':''"
+                                th:if="${etype.TYPE=='1'}" th:onclick="setEtype(this,[[${etype.id}]])">
                                 <div class="layui-menu-body-title">
                                     <span th:text="${etype.typeName}"> </span>
                                     <span class="layui-font-12 layui-font-gray"> </span>
@@ -53,12 +53,13 @@
                 </li>
                 <li class="layui-menu-item-group" lay-options="{type: 'group', isAllowSpread: true}">
                     <div class="layui-menu-body-title">
-                        法术武器
+                        远程武器
                     </div>
                     <hr>
                     <ul>
                         <th:block th:each="etype:${etype_list}">
-                            <li th:if="${etype.TYPE==2}" th:onclick="setEtype(this,[[${etype.id}]])">
+                            <li th:class="${searchModel.etype==etype.id}?'layui-menu-item-checked':''"
+                                th:if="${etype.TYPE=='2'}" th:onclick="setEtype(this,[[${etype.id}]])">
                                 <div class="layui-menu-body-title">
                                     <span th:text="${etype.typeName}"> </span>
                                     <span class="layui-font-12 layui-font-gray"> </span>
@@ -74,7 +75,8 @@
                     <hr>
                     <ul>
                         <th:block th:each="etype:${etype_list}">
-                            <li th:if="${etype.TYPE==3}" th:onclick="setEtype(this,[[${etype.id}]])">
+                            <li th:class="${searchModel.etype==etype.id}?'layui-menu-item-checked':''"
+                                th:if="${etype.TYPE=='3'}" th:onclick="setEtype(this,[[${etype.id}]])">
                                 <div class="layui-menu-body-title">
                                     <span th:text="${etype.typeName}"> </span>
                                     <span class="layui-font-12 layui-font-gray"> </span>
@@ -124,7 +126,7 @@
             <div class="project-list-wrapper">
                 <div class="project-list">
                     <th:block th:each="equiment:${equiment_list}">
-                        <div class="project-list-item">
+                        <a class="project-list-item" style="width: 460px;" th:href="'/equiment_detail/'+${equiment.id}"  >
                             <div class="project-list-item-img" th:inline="css"
                                  th:style="'background-image:url(' + ${equiment.picture}+')'"></div>
                             <div class="project-list-item-detail">
@@ -134,15 +136,15 @@
                                 <div class="project-list-item-time">
                                     <div>
                                         <div class="project-list-item-address">
-                                            <span class="venue-name-and-address" th:text="${equiment.describe}"></span>
+                                            <span class="venue-name-and-address" style="max-width: 230px" th:text="${equiment.describe}"></span>
                                         </div>
                                         <div class="project-list-item-address"><span class="icon address-icon"></span>
-                                            <span class="city-name" th:text="${equiment.achieving}"></span>
+                                            <span class="city-name" style="max-width: 200px;white-space: nowrap;overflow: hidden;" th:text="${equiment.achieving}"></span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </th:block>
                 </div>
             </div>
@@ -172,8 +174,10 @@
                 </div>
             </div>
         </th:block>
-        <th:block th:else>
-            <div style="height: 804px;background-color: white;background-image: url('../../static/pageImage/question.png')"></div>
+        <th:block th:if="${equiment_list==null}">
+            <h1 style="text-align: center;color:dimgray;font-size: xxx-large;font-weight: bolder">李在搜神魔？</h1>
+            <div class="hidden" style="height: 20px"></div>
+            <div style="height: 804px;background-color: white;background-image: url('../../static/pageImage/reqstion.png')"></div>
         </th:block>
         <!----------------------------------------------------页码条END------------------------>
         <div class="layui-hide-lg">
@@ -186,10 +190,15 @@
                 <input th:value="${searchModel.pageIndex}" id="pageIndex" name="pageIndex" type="hidden"/>
             </form>
             <script type="application/javascript">
-                $(function () {
+
+                $(function (e) {
                     $('.pageNum').click(setPageIndex)
+
                 })
 
+                function toDetail(e){
+
+                }
                 function setPageIndex_bynum(index){
                     $('#pageIndex').val(index)
                     doSearch()

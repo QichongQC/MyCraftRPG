@@ -1,3 +1,4 @@
+import Common.MD5;
 import Common.Search.BaseSerach;
 import Common.Search.ETypeSearchModel;
 import Common.Search.EquimentSearchModel;
@@ -43,7 +44,7 @@ public class Test {
         qc.MyCraft.Models.BaseModels.EType eType=new EType();
         eType.setTypeName("法杖2");
         eType.setIntroduce("远程武器2");
-        eType.setId(6);
+        eType.setId("6");
         int i = eTypeDao.editEType(eType);
 
         System.out.println(i);
@@ -60,9 +61,9 @@ public class Test {
         qc.MyCraft.Models.BaseModels.Equiment equiment=new Equiment();
         equiment.setAchieving("gg");
         equiment.setDescribe("gg");
-        equiment.setEtype(2);
+        equiment.setEtype("2");
         equiment.setPicture("gg");
-        equiment.setId(6);
+        equiment.setId("6");
         equimentDao.addEquiment(equiment);
 
     }
@@ -71,10 +72,10 @@ public class Test {
         qc.MyCraft.Models.BaseModels.Equiment equiment=new Equiment();
         equiment.setAchieving("gg2");
         equiment.setDescribe("gg2");
-        equiment.setEtype(2);
+        equiment.setEtype("2");
         equiment.setPicture("gg2gggg");
-        equiment.setId(2);
-        equiment.setId(6);
+        equiment.setId("2");
+        equiment.setId("6");
         equimentDao.editEquiment(equiment);
 
     }
@@ -86,7 +87,7 @@ public class Test {
     @org.junit.Test
     public void testSearch_E(){
         EquimentSearchModel instance = new EquimentSearchModel();
-        instance.setEtype(2);
+        instance.setEtype("2");
         instance.setAchieving("sb");
         instance.setName("武器");
         List<Equiment> equimentListBySearch = equimentDao.getEquimentListBySearch(instance);
@@ -112,8 +113,13 @@ public class Test {
     @org.junit.Test
     public void TestRecordCount_Equiment(){
         EquimentSearchModel equimentSearchModel = new EquimentSearchModel();
-        equimentSearchModel.setEtype(1);
+        equimentSearchModel.setEtype("1");
         System.out.println(equimentDao.getRecordCount(equimentSearchModel));
 
+    }
+
+    @org.junit.Test
+    public void testMD5(){
+        System.out.println(MD5.encryptToMD5("shabimaposhabiyandaishun12138"));
     }
 }

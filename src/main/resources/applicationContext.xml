@@ -18,6 +18,7 @@
         <!-- 配置要忽略的注解 -->
         <context:exclude-filter type="annotation"
                                 expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="assignable" expression="qc.MyCraft.Aspects.AspectClasses_MVC.CheckUserStatus"/>
     </context:component-scan>
 
     <!--这一部分是整合spring与mybatis-->

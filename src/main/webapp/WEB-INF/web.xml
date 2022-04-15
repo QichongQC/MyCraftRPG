@@ -31,10 +31,21 @@
         <filter-name>HiddenHttpMethodFilter</filter-name>
         <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
     </filter>
+
     <filter-mapping>
         <filter-name>HiddenHttpMethodFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+<!--    <filter>-->
+<!--        <filter-name>AdminAuthFilter</filter-name>-->
+<!--        <filter-class>qc.MyCraft.Filters.AdminAuthFilter</filter-class>-->
+<!--    </filter>-->
+
+<!--    <filter-mapping>-->
+<!--        <filter-name>AdminAuthFilter</filter-name>-->
+<!--        <url-pattern>/Admin/*</url-pattern>-->
+<!--    </filter-mapping>-->
 
     <!-- 配置Spring的监听器 -->
     <listener>
@@ -45,7 +56,9 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:applicationContext.xml</param-value>
     </context-param>
-
+    <session-config>
+        <session-timeout>60</session-timeout>
+    </session-config>
 
 <servlet>
         <servlet-name>SpringServlet</servlet-name>

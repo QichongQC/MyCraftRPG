@@ -3,9 +3,12 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
     <!--视图解析器-->
     <!--使用ThymeleafViewResolver来作为视图解析器(不使用默认的InternalResourceViewResolver)-->
+
+
     <bean id="thymeleafViewResolver"  class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
         <property name="order" value="1"></property>
         <property name="characterEncoding" value="utf-8"></property>
@@ -45,6 +48,7 @@
 
     <!--扫描包-->
     <context:component-scan base-package="qc.MyCraft.Controller"></context:component-scan>
+    <context:component-scan base-package="qc.MyCraft.Aspects"></context:component-scan>
 
     <!--当控制器方法中，仅仅用来实现页面跳转，即只需要设置视图名称时，可以将处理器方法使用view-controller标签进行表示-->
     <!--
@@ -82,5 +86,7 @@
             <ref bean="firstInterceptor"></ref>
         </mvc:interceptor>
     </mvc:interceptors>-->
+    <!--开启aop-->
+    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 
 </beans>

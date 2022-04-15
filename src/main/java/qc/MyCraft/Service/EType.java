@@ -15,6 +15,8 @@ public interface EType {
     public List<qc.MyCraft.Models.BaseModels.EType> getAllEtype();
     //添加
     public int addEtype(EType eType);
+
+    public qc.MyCraft.Models.BaseModels.EType getById(String id);
     //修改
     public int editEType(EType eType);
     //删除

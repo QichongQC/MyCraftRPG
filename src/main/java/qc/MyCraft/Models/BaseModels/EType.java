@@ -6,8 +6,8 @@ import lombok.Data;
 @Data
 @Serialization
 public class EType {
-    int id;
+    String id;
     String typeName;
     String introduce;
-    int TYPE;
+    String TYPE;
 }

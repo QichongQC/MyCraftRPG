@@ -7,12 +7,11 @@ import java.lang.annotation.Annotation;
 
 @Data
 public class Equiment  {
-
-    Integer id;
-    Integer Etype;
+    String id;
+    String Etype;
     String name;
     String picture;
     String describe;
     String achieving;
-
+    String richTxt;
 }

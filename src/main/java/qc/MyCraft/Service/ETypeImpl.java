@@ -15,6 +15,8 @@ public class ETypeImpl implements EType{
     @Autowired
     qc.MyCraft.dao.EType eType;
 
+
+
     @Override
     public List<qc.MyCraft.Models.BaseModels.EType> getEtypeListBySearch(BaseSerach serach) {
         return null;
@@ -28,6 +30,11 @@ public class ETypeImpl implements EType{
     @Override
     public int addEtype(EType eType) {
         return eType.addEtype(eType);
+    }
+
+    @Override
+    public qc.MyCraft.Models.BaseModels.EType getById(String id) {
+       return eType.getById(id);
     }
 
     @Override

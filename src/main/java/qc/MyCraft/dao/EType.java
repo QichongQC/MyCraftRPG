@@ -23,6 +23,9 @@ public interface EType {
     @Insert("insert into etype(typeName,introduce) values('${typeName}','${introduce}')")
     public int addEtype(qc.MyCraft.Models.BaseModels.EType eType);
 
+    @Select("select * from etype where id=#{id}")
+    public qc.MyCraft.Models.BaseModels.EType getById(String id);
+
     //修改
     @Update("update etype set typeName= '${typeName}' ,introduce='${introduce}' where id = ${id}")
     public int editEType(qc.MyCraft.Models.BaseModels.EType eType);

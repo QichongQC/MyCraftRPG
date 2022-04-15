@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../static/CSS/adminLogin.css">
+    <link rel="stylesheet" href="../../static/CSS/adminLogin2.css">
+    <script src="../../static/js/jquery.min.js"></script>
+</head>
+<body>
+
+<main>
+    <div id="reg" data-v-62c8c7aa="">
+        <div class="reg-bg" data-v-62c8c7aa=""
+             style="background-image:url('../../static/pageImage/大观园全景.jpg');height: 920px"></div>
+        <div class="reg-container" data-v-62c8c7aa="">
+            <div class="reg-wrapper" data-v-62c8c7aa="" style="height: 282px">
+                <div class="reg-head" data-v-62c8c7aa="">
+                    <img
+                            src="../../static/pageImage/logo.png" style="width: 200px;height: 60px" class="reg-logo"
+                            data-v-62c8c7aa="">
+                </div>
+                <div class="reg-form-wrapper" data-v-62c8c7aa="">
+                    <form class="reg-form" action="/loginAdmin" METHOD="post">
+
+                        <div class=" orm-item">
+                            <span
+                                    class="reg-input ac-input-wrapper ac-input-group ac-input-group-prepend">
+                            <div
+                                    class="ac-input-prepend"><span class="ac-icon"><i class="iconfont"></i></span>
+                            </div>
+                                <!----> <input id="pwdinput" oninput="setBtnStyle()" placeholder="请输入密码"
+                                               autocomplete="new-password" minlength="" maxlength=""
+                                               type="password" name="password" value="" class="ac-input">
+
+
+                                <!----> <!----> <!----></span>
+                            <th:block th:if="${error_msg!=null}">
+                                <div class="ac-reg-error-toast phone-toast reg-toast" style="margin-top: 0px;text-align: left"><span class="ac-icon"><i
+                                        class="iconfont"></i></span> <span class="reg-toast-text" th:text="${error_msg}"></span></div>
+                        </div>
+                            </th:block>
+
+
+                        <div class="reg-submit">
+                            注册
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+
+    function submit() {
+        $('.reg-form').submit();
+    }
+
+    function setBtnStyle() {
+        if ($('#pwdinput').val().length > 5) {
+            $('.reg-submit').addClass('active')
+            $('.reg-submit')[0].addEventListener('click', submit);
+        } else {
+            $('.reg-submit').removeClass('active')
+            $('.reg-submit')[0].removeEventListener('click', submit)
+        }
+    }
+</script>
+</body>
+</html>

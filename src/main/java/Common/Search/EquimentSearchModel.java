@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class EquimentSearchModel extends BaseSerach {
 
-    Integer id;
-    Integer Etype;
+    String id;
+    String Etype;
     String picture;
     String describe;
     String achieving;

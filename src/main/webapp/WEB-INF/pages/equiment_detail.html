@@ -3,42 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="../../static/CSS/testHomeCss.css">
+    <link rel="stylesheet" href="../../static/CSS/equiment_detail.css">
 </head>
 <body>
-<div class="buyticket">
-    <div class="bread-wrapper"><span><a href="//www.bilibili.com">Bilibili</a></span> <span class="symbol">&gt;</span>
-        <span><a href="./home.html">会员购</a></span> <span class="symbol">&gt;</span> <span class="project-name">泉州·CICG 2021中国幻梦动漫游戏超级盛典</span>
+<div class="buyticket" style="height: 890px">
+    <div class="bread-wrapper"><span><a href="#"></a></span> <span class="symbol"></span>
+        <span><a th:href="'/?etype='+${equiment.etype}" th:text="${etype.typeName}"></a></span>
+        <span class="symbol">&gt;</span> <span class="project-name" th:text="${equiment.name}"></span>
     </div>
+    <!----详情页面----->
     <div class="whole-detail-info-wrapper">
         <div class="detail-img-icon no_pic"
-             style="background-image: url(&quot;//i0.hdslb.com/bfs/openplatform/202203/WzSF7iL61646809606734.jpeg@600w_800h.jpeg&quot;);"></div>
+             th:style="'background-image: url('+${equiment.picture}+');'"></div>
         <div class="detail-info-wrapper">
-            <div class="product-info-name"><!----> <span class="title">泉州·CICG 2021中国幻梦动漫游戏超级盛典</span></div> <!---->
-            <div class="vuene-wrapper">
-                <div class="title">场馆：</div>
-                <div class="vuene-info-content">
-                    <div class="vuene-name">泉州太子酒店</div>
-                    <div class="address-name">德泰路2-30号</div>
-                    <div class="address-icon"></div>
-                    <div class="check-map">查看地图</div>
-                </div>
+            <div class="product-info-name"><!----> <span class="title" th:text="${equiment.name}"></span></div> <!---->
+            <div class="login-show-wrapper">
+                <ul class="clearfix" style="font-size: x-large">
+                    <li class="title" style="font-size: x-large">描述：</li>
+                    <li class="tickets">
+                        <div class="vuene-info-content" style="font-size: x-large">
+                            <div class="vuene-name" th:text="${equiment.describe}"></div>
+                        </div>
+                    </li>
+                </ul>
+
             </div> <!---->
             <div class="login-show-wrapper">
-                <ul class="clearfix">
-                    <li class="title">价格：</li>
+                <ul class="clearfix" style="font-size: x-large">
+                    <li class="title" style="font-size: x-large">获取：</li>
                     <li class="tickets">
-                        <div class="selectable-option active">
-                            ¥35(预售票)
-                        </div>
-                        <div class="selectable-option unable">
-                            ¥50(现场票)2022-05-01 00:00:00开售
+                        <div class="vuene-info-content">
+                            <div class="vuene-name" th:text="${equiment.achieving}"></div>
                         </div>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
+    <th:block th:if="${equiment.richTxt != '' && equiment.richTxt != null}">
+        <div class="activity-info-wrapper ticket-system-container">
+            <div class="activity-info scroll-wrapper" STYLE="width: 100%">
+                <div class="activity-info-header">
+                    <div class="icon icon-activity"></div>
+                    <div class="guest-title">具体描述:</div>
+                </div>
+                <div class="activity-info-body" th:utext="${equiment.richTxt}">
+                </div>
+            </div>
+        </div>
+    </th:block>
 </div>
 </body>
 </html>

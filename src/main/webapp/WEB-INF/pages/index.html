@@ -11,12 +11,18 @@
 <div class="layui-header header header-doc" style="background-color:#393D49;">
     <div  class="layui-container">
         <ul class="layui-nav" lay-filter="">
+            <A th:href="'/'" class="" style="margin-top: 0.5px;background-size: contain;background-repeat:no-repeat;float:left;z-index: 100;height: 58px;width: 300px;background-image: url('../../static/pageImage/logo.png')"></A>
             <li th:class="${mainPage=='equipmen'}?'layui-nav-item layui-this':'layui-nav-item'"  ><a href="/">装备</a></li>
-            <li  class="layui-nav-item"><a href="">产品</a></li>
+            <li  class="layui-nav-item" style="float: right"><a href="/loginAdmin">后台</a></li>
         </ul>
 
     </div>
 </div>
-<div th:replace="${mainPage}"></div>
+<div th:replace="${mainPage}" STYLE="height: 100%"></div>
+<style>
+    .bb{
+        border: 1px solid black;
+    }
+</style>
 </body>
 </html>
