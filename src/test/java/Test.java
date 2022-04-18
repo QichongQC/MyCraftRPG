@@ -58,18 +58,18 @@ public class Test {
     }
     @org.junit.Test
     public void testADD_E(){
-        qc.MyCraft.Models.BaseModels.Equiment equiment=new Equiment();
-        equiment.setAchieving("gg");
-        equiment.setDescribe("gg");
-        equiment.setEtype("2");
-        equiment.setPicture("gg");
-        equiment.setId("6");
-        equimentDao.addEquiment(equiment);
+//        qc.MyCraft.Models.BaseModels.Equiment equiment=new Equiment();
+//        equiment.setAchieving("gg");
+//        equiment.setDescribe("gg");
+//        equiment.setEtype("2");
+//        equiment.setPicture("gg");
+//        equiment.setId("6");
+//        equimentDao.addEquiment(equiment);
 
     }
     @org.junit.Test
     public void testEdit_E(){
-        qc.MyCraft.Models.BaseModels.Equiment equiment=new Equiment();
+       /* qc.MyCraft.Models.BaseModels.Equiment equiment=new Equiment();
         equiment.setAchieving("gg2");
         equiment.setDescribe("gg2");
         equiment.setEtype("2");
@@ -77,7 +77,7 @@ public class Test {
         equiment.setId("2");
         equiment.setId("6");
         equimentDao.editEquiment(equiment);
-
+*/
     }
     @org.junit.Test
     public void testRm_E(){

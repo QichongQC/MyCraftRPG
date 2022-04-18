@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../static/js/jquery.min.js"></script>
+    <link href="../../static/CSS/testHomeCss.css" rel="stylesheet">
+    <link href="../../static/CSS/testHomeCSS2.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/js/layui-v2.6.8/layui/css/layui.css">
+    <script src="../../static/js/layui-v2.6.8/layui/layui.js"></script>
+</head>
+<body>
+<div class="layui-container">
+    <div class="layui-col-md3">
+        <div class="layui-panel site-menu" style="width: 235px;">
+            <ul class="layui-menu layui-menu-lg">
+                <li class="layui-menu-item-group" lay-options="{type: 'group', isAllowSpread: true}"
+                    style="height: 1200px">
+                    <ul>
+                        <th:block th:each="item,state:${admin_modules}">
+                            <li th:class="${#request.getRequestURL().toString().contains(state.current.value)}?'layui-menu-item-checked':''"
+                            >
+                                <div class="layui-menu-body-title">
+                                    <a th:href="${state.current.value}" th:text="${state.current.key}"></a>
+                                    <span class="layui-font-12 layui-font-gray"> </span>
+                                </div>
+                            </li>
+                        </th:block>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="layui-col-md9">
+        <div class="layui-container">
+            <div class="layui-col-md12" style="margin-top: 30px">
+                <div class="layui-form">
+                    <div class="layui-input-inline">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">装备总类</label>
+                            <div class="layui-input-inline">
+                                <select id="etypes" lay-verify="required" onchange="setEtype()" lay-search="">
+                                    <option value="">选择装备总类</option>
+                                    <th:block th:each="etype:${etype_list}" >
+                                        <option th:class="${searchModel.Etype==etype.id}?'layui-this':''" th:value="${etype.id}" th:text="${etype.typeName}"></option>
+                                    </th:block>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-input-inline" style="width: 160px">
+                        <div class="layui-input-block" style="margin-left: 0">
+                            <input autocomplete="off" class="layui-input" id="input_name" placeholder="请输入装备名称"
+                                   required="" th:value="${searchModel.name}"
+                                   type="text"/>
+                        </div>
+                    </div>
+                    <div class="layui-input-inline" style="width: 160px">
+                        <div class="layui-input-block" style="margin-left: 0">
+                            <input autocomplete="off" class="layui-input" id="input_describe" placeholder="请输入装备描述"
+                                   required="" th:value="${searchModel.describe}"
+                                   type="text"/>
+                        </div>
+                    </div>
+                    <div class="layui-input-inline" style="width: 160px">
+                        <div class="layui-input-block" style="margin-left: 0">
+                            <input autocomplete="off" class="layui-input" id="input_achieving" placeholder="请输入装备取得途径"
+                                   required="" th:value="${searchModel.achieving}"
+                                   type="text"/>
+                        </div>
+                    </div>
+                    <div class="layui-input-inline">
+                        <div class="layui-input-block" style="margin-left: 0">
+                            <button class="layui-btn" onclick="$('#pageIndex').val(1);doSearch();">查询</button>
+                            <button class="layui-btn" onclick="clearSearchCondition()"
+                                    style="background-color: indianred">清除查询条件
+                            </button>
+                            <a class="layui-btn" th:href="'/Admin/Equiment/Put'">添加</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="project-list-wrapper">
+                <div class="project-list">
+                    <th:block th:each="equiment:${equiment_list}">
+                        <a class="project-list-item" style="width: 460px;" >
+                            <button th:inline="javascript" th:onclick="delete_equiment([[${equiment.id}]])"
+                                    data-method="offset" data-type="auto" class="layui-btn layui-btn-normal"
+                                    style="margin-left: 381px;position: absolute;z-index: 5">删除</button>
+                            <div  class="project-list-item-img" th:inline="css" th:onclick="skipToUpdate([[${equiment.id}]])"
+                                 th:style="'background-image:url('+${equiment.picture}+')'"></div>
+                            <div  class="project-list-item-detail"  th:onclick="skipToUpdate([[${equiment.id}]])">
+                                <div class="project-list-item-title" style="-webkit-box-orient: vertical;"
+                                     th:text="${equiment.name}">
+                                </div>
+                                <div class="project-list-item-time">
+                                    <div>
+                                        <div class="project-list-item-address">
+                                            <span class="venue-name-and-address" style="max-width: 230px"
+                                                  th:text="${equiment.describe}"></span>
+                                        </div>
+                                        <div class="project-list-item-address"><span class="icon address-icon"></span>
+                                            <span class="city-name"
+                                                  style="max-width: 200px;white-space: nowrap;overflow: hidden;"
+                                                  th:text="${equiment.achieving}"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+        <!--页码条------------------------>
+        <th:block th:if="${equiment_list!=null}">
+            <div class="whole-pagination-wrapper">
+                <div class="pagination-wrapper">
+                    <div th:class="${searchModel.pageIndex>1}?'arrow pagination-left-arrow ':'arrow pagination-left-arrow  disabled'"
+                         th:onclick="${searchModel.pageIndex>1}?'setPageIndex_bynum('+${searchModel.PageIndex-1}+')':''"></div>
+
+                    <div class="pagination">
+                        <th:block th:if="${searchModel.barStart>1}">
+                            <span class="pageNum" th:text="1"></span>
+                            <span class="pageNum">...</span>
+                        </th:block>
+                        <th:block th:each="i:${#numbers.sequence(searchModel.barStart,searchModel.barEnd)}">
+                            <span th:class="${searchModel.pageIndex==i}?'pageNum active':'pageNum'"
+                                  th:text="${i}"></span>
+                        </th:block>
+                        <th:block th:if="${searchModel.barEnd<searchModel.pageCount}">
+                            <span class="pageNum">...</span>
+                            <span class="pageNum" th:text="${searchModel.pageCount}"></span>
+                        </th:block>
+                    </div>
+                    <div th:class="${searchModel.pageIndex<searchModel.pageCount}?'arrow pagination-right-arrow':'arrow pagination-right-arrow disabled'"
+                         th:onclick="${searchModel.pageIndex<searchModel.pageCount}?'setPageIndex_bynum('+${searchModel.PageIndex+1}+')':''"></div>
+                </div>
+            </div>
+        </th:block>
+        <th:block th:if="${equiment_list==null}">
+            <h1 style="text-align: center;color:dimgray;font-size: xxx-large;font-weight: bolder">李在搜神魔？</h1>
+            <div class="hidden" style="height: 20px"></div>
+            <div style="height: 804px;background-color: white;background-image: url('../../static/pageImage/reqstion.png')"></div>
+        </th:block>
+        <!----------------------------------------------------页码条END------------------------>
+        <div class="layui-hide-lg">
+            <form action="/Admin/Home" enctype="application/x-www-form-urlencoded" id="submitForm" method="get">
+                <input id="Etype" name="Etype" th:value="${searchModel.etype}" type="hidden"/>
+                <input id="describe" name="describe" th:value="${searchModel.describe}" type="hidden"/>
+                <input id="achieving" name="achieving" th:value="${searchModel.achieving}" type="hidden"/>
+                <input id="name" name="name" th:value="${searchModel.name}" type="hidden"/>
+                <input id="pageIndex" name="pageIndex" th:value="${searchModel.pageIndex}" type="hidden"/>
+            </form>
+            <script type="application/javascript" th:inline="javascript">
+
+                $(function (e) {
+                    $('.pageNum').click(setPageIndex)
+
+                })
+
+                function delete_equiment(id){
+                    let juxu=false;
+                    layer.open({
+                        title: '确定要删除该数据吗？'
+                        ,yes: function(index, layero){
+                            deleteAjax(id)
+                        },
+                        cancel:function (){
+                            return;
+                        }
+                    });
+
+
+                }
+                function deleteAjax(id){
+                    if (isNaN(id)){
+                        alert("捏🐎的，给我整活是吧？")
+                        return;
+                    }
+                    $.ajax({
+                        // url: 请求地址
+                        url: '/Admin/Equiment/Delete/'+id,
+                        // type: 请求方式，默认是"GET"，常用的还有"POST"
+                        type: "POST",
+                        // dataType: 设置服务器返回的数据格式，常用的是 json 格式
+                        dataType: "JSON",
+                        // data: 设置发送给服务器的数据，没有参数不需设置
+
+                        // success: 设置请求成功后的回调函数
+                        success: function(response) {
+                            if (response.status==0){
+                                layer.msg("删除失败！")
+                            }else {
+                                layer.msg("删除成功，该数据会在一分钟内移除缓存。");
+                            }
+                        },
+                        // error: 设置请求失败后的回调函数
+                        error: function() {
+                            alert("请求失败！请联系管理员！");
+                        },
+                        // async：设置请求是否异步，默认是true，表示异步，一般不用写
+                        async: true
+                    })
+                }
+
+                function skipToUpdate(id){
+                    if (isNaN(id)){
+                        alert("捏🐎的，给我整活是吧？")
+                        return;
+                    }
+                    window.location.href="/Admin/Equiment/Update/"+id;
+                }
+                function toDetail(e) {
+
+                }
+
+                function setPageIndex_bynum(index) {
+                    $('#pageIndex').val(index)
+                    doSearch()
+                }
+
+                function setPageIndex(e) {
+                    num = e.target.innerText;
+                    //如果是数字
+                    if (isNaN(num)) {
+                        return
+                    }
+                    $('#pageIndex').val(num)
+                    doSearch()
+                }
+
+
+                function setSearchCondition() {
+                    $("#Etype").val($('#etypes').val())
+                    $("#name").val($("#input_name").val());
+                    $("#describe").val($("#input_describe").val());
+                    $("#achieving").val($("#input_achieving").val());
+
+                }
+
+                function clearSearchCondition() {
+                    $("#Etype").val('');
+                    $("#name").val('');
+                    $("#describe").val('');
+                    $("#achieving").val('');
+
+                    $("#input_name").val('');
+                    $("#input_describe").val('');
+                    $("#input_achieving").val('');
+                    doSearch()
+                }
+
+                function doSearch() {
+
+                    setSearchCondition();
+                    $('#submitForm').submit();
+                }
+            </script>
+        </div>
+</body>
+</html>

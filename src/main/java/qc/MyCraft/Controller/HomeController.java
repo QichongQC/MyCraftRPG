@@ -5,24 +5,21 @@ import Common.Search.EquimentSearchModel;
 import Common.Template;
 import Common.UserManager;
 import org.apache.ibatis.io.Resources;
-import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 import qc.MyCraft.Models.BaseModels.Equiment;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -67,7 +64,13 @@ public class HomeController {
 
     @GetMapping("/loginAdmin")
     public ModelAndView Home(HttpServletRequest request){
-        ModelAndView mav=Template.getTemplate("index","LoginAdmin","进入后台♂");
+        ModelAndView mav=new ModelAndView(new RedirectView("/Admin/Home"));
+
+        //如果用户已经登录了
+        if (UserManager.getUserStatus(request.getSession())!=null){
+            return mav;
+        }
+        mav=Template.getTemplate("index","LoginAdmin","进入后台♂");
         String errorMsg_key="page_error";
         if(request.getSession().getAttribute(errorMsg_key)!=null){
             String page_error = request.getSession().getAttribute(errorMsg_key).toString();

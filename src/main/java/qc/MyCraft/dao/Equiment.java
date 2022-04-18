@@ -25,9 +25,12 @@ public interface Equiment {
     @Select("select * from Equiment where id = #{id}")
     public qc.MyCraft.Models.BaseModels.Equiment getEquimentById(int id);
 
-    @Insert("insert into Equiment (Etype,picture,`describe`,achieving) values (#{Etype},#{picture},#{describe},#{achieving})")
+    @Insert("insert into Equiment (Etype,name,picture,`describe`,achieving,richTxt) values (#{Etype},#{name},#{picture},#{describe},#{achieving},#{richTxt})")
     public int addEquiment(qc.MyCraft.Models.BaseModels.Equiment equiment);
-    @Update("update Equiment set etype=#{etype},picture=#{picture},`describe`=#{describe},achieving=#{achieving},richTxt=#{richTxt} where id=${id}")
+
+    //TODO
+    //需要改成xml 并且判断 picture的值
+//    @Update("update Equiment set etype=#{etype},picture=#{picture},`describe`=#{describe},achieving=#{achieving},richTxt=#{richTxt} where id=${id}  ")
     public int editEquiment(qc.MyCraft.Models.BaseModels.Equiment equiment);
 
     @Delete("delete from equiment where id =#{id}")

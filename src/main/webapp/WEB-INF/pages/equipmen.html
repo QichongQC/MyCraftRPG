@@ -115,7 +115,7 @@
                     </div>
                     <div class="layui-input-inline">
                         <div class="layui-input-block" style="margin-left: 0">
-                            <button class="layui-btn" onclick="doSearch()">查询</button>
+                            <button class="layui-btn" onclick="doSearchWithResetPageIndex()">查询</button>
                             <button class="layui-btn" style="background-color: indianred"
                                     onclick="clearSearchCondition()">清除查询条件
                             </button>
@@ -182,7 +182,6 @@
         <!----------------------------------------------------页码条END------------------------>
         <div class="layui-hide-lg">
             <form id="submitForm" enctype="application/x-www-form-urlencoded" method="get" action="/">
-                <!--  //todo-->
                 <input th:value="${searchModel.etype}" id="Etype" name="Etype" type="hidden"/>
                 <input th:value="${searchModel.describe}" id="describe" name="describe" type="hidden"/>
                 <input th:value="${searchModel.achieving}" id="achieving" name="achieving" type="hidden"/>
@@ -215,6 +214,7 @@
                 }
 
                 function setEtype(e, typeId) {
+                    $('#pageIndex').val(1)
                     $("#Etype").val(typeId);
                     doSearch()
                 }
@@ -239,6 +239,12 @@
                 }
 
                 function doSearch() {
+                    setSearchCondition();
+                    $('#submitForm').submit();
+                }
+
+                function doSearchWithResetPageIndex(){
+                    $('#pageIndex').val(1)
                     setSearchCondition();
                     $('#submitForm').submit();
                 }

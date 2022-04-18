@@ -27,4 +27,11 @@ public interface Equiment {
      * @return
      */
     public int getRecordCount(BaseSerach serach);
+
+    /**
+     * 删除那些被删除数据的静态资源
+     * @param
+     * @return
+     */
+    public boolean release_deleted_resource(qc.MyCraft.Models.BaseModels.Equiment equiment);
 }

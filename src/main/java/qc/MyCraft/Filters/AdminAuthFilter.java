@@ -27,7 +27,6 @@ public class AdminAuthFilter implements Filter {
         {
             session.setAttribute("page_error","无效的访问！");
             res1.sendRedirect("/loginAdmin");
-            //todo 跳转到error
             return;
         }
         filterChain.doFilter(request1, res1);

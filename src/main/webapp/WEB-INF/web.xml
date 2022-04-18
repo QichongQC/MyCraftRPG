@@ -37,6 +37,14 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
+    <filter>
+        <filter-name>InitHttpContentsFilter</filter-name>
+        <filter-class>qc.MyCraft.Filters.InitHttpContentsFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>InitHttpContentsFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 <!--    <filter>-->
 <!--        <filter-name>AdminAuthFilter</filter-name>-->
 <!--        <filter-class>qc.MyCraft.Filters.AdminAuthFilter</filter-class>-->
@@ -76,15 +84,7 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-    <!--日志的配置-->
-    <context-param>
-        <param-name>log4jConfiguration</param-name>
-        <param-value>classpath:log4j2.xml</param-value>
-    </context-param>
 
-    <!--动态修改log4j2.xml：容器会每60秒扫描log4j的配置文件-->
-    <context-param>
-        <param-name>log4jRefreshInterval</param-name>
-        <param-value>60000</param-value>
-    </context-param>
+
+
 </web-app>

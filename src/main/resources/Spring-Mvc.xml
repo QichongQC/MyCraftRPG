@@ -86,7 +86,11 @@
             <ref bean="firstInterceptor"></ref>
         </mvc:interceptor>
     </mvc:interceptors>-->
+
+
     <!--开启aop-->
     <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
-
+    
+    <!--配置静态文件路径-->
+    <mvc:resources mapping="/static/**" location="/static/"></mvc:resources>
 </beans>

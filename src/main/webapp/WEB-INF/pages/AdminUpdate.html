@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/static/CSS/equiment_detail.css" rel="stylesheet">
+    <link href="/static/js/wangEditor/wangEditor.css" rel="stylesheet">
+    <script src="/static/js/jquery.min.js"></script>
+</head>
+<body>
+<form method="post" id="subForm" th:action="'/Admin/Equiment/Update/'+${equipment.id}" enctype="multipart/form-data">
+    <div th:if="${field_errors}!=null" th:each="item,stat:${field_errors}">
+        <h5 th:text="${stat.current.key}+':'+${stat.current.value}"></h5></div>
+    <div class="buyticket" style="height: 890px">
+        <div class="bread-wrapper"><span><a href="#"></a></span> <span class="symbol"></span>
+        </div>
+        <!----详情页面----->
+        <div class="layui-hide">
+            <input accept="image/*,.jpeg" id="upload_file" name="pictrue_img" type="file"/>
+        </div>
+        <div class="whole-detail-info-wrapper">
+            <div onclick="clearImg()" style="border:1px solid gray;width: 30px;height: 30px;line-height: 20px;margin-right: 20px;z-index: 10;font-size: 50px" >x</div>
+            <div class="" id="select_file" onclick="selectFile()" style="font-size: xxx-large">
+
+                <img class="detail-img-icon no_pic" id="picture" th:src="${equipment.picture}">
+                <script>
+                    //清除封面图片
+                    function clearImg(){
+                        const dt = new DataTransfer()
+                        var $uploadFileElement = $('#upload_file')[0];
+                        $uploadFileElement.files=dt.files;
+                        $('#picture')[0].src='';
+                    }
+                    //选择图片文件
+                    function selectFile() {
+                        $('#upload_file').click();
+                        // 将上传的图片显示到页面上
+                        $(document).on("change", "#upload_file", function () {
+                            var fileObj = $("#upload_file")[0];
+                            console.log(fileObj)
+                            var img = document.getElementById('picture'); //获得用户上传的图片节点
+                            var reader = new FileReader();
+                            // 转换成功后的操作，img.src即为转换后的DataURL
+                            reader.onload = function (e) {
+                                if (reader.readyState === 2) { //加载完毕后赋值
+                                    img.src = e.target.result;
+                                }
+                            }
+                            reader.readAsDataURL(fileObj.files[0]);
+                        });
+                    }
+
+                </script>
+            </div>
+
+            <div class="detail-info-wrapper">
+                <div class="product-info-name"><!---->
+
+                    <div class="layui-input-inline" style="width: 300px">
+                        <ul class="clearfix">
+                            <li class="title" style="font-size: x-large">武器类型：</li>
+                        </ul>
+                        <select id="etype_select" lay-verify="required" onchange="setEtype()" lay-search="">
+                            <option value="" >选择装备种类</option>
+                            <th:block th:each="etype:${etype_list}" >
+                                <option th:selected="${equipment.etype}==${etype.id}" th:text="${etype.typeName}" th:value="${etype.id}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                    <div class="layui-input-inline" style="width: 400PX">
+                        <ul class="clearfix">
+                            <li class="title" style="font-size: x-large">武器名称：</li>
+                        </ul>
+                        <div class="layui-input-block" style="margin-left: 0">
+                            <input autocomplete="off" class="layui-input" id="input_name" name="name" placeholder="请输入装备名称"
+                                   required="" th:value="${equipment.name}"
+                                   type="text"/>
+                        </div>
+                    </div>
+                </div> <!---->
+                <div class="login-show-wrapper">
+                    <ul class="clearfix" style="font-size: x-large">
+                        <li class="title" style="font-size: x-large">描述：</li>
+                        <div class="layui-input-inline" style="width: 400PX">
+                            <div class="layui-input-block" style="margin-left: 0">
+                            <textarea autocomplete="off" name="describe" class="layui-input" id="input_describe" placeholder="请输入装备描述"
+                                      required=""
+                                      style="width: 688px;height: 191px"
+                                      th:text="${equipment.describe}"
+                                      type="text"/></textarea>
+                            </div>
+                        </div>
+                    </ul>
+
+                </div> <!---->
+                <div class="login-show-wrapper">
+                    <ul class="clearfix" style="font-size: x-large">
+                        <li class="title" style="font-size: x-large">获取：</li>
+                        <div class="layui-input-inline" style="width: 400PX">
+                            <div class="layui-input-block" style="margin-left: 0">
+                            <textarea autocomplete="off" name="achieving" class="layui-input" id="input_achieving" placeholder="请输入获取途径"
+                                      required=""
+                                      style="width: 688px;height: 131px"
+                                      th:text="${equipment.achieving}"
+                                      type="text"/></textarea>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="activity-info-wrapper ticket-system-container">
+            <div STYLE="width: 100%" class="activity-info scroll-wrapper">
+                <div class="activity-info-header">
+                    <div class="icon icon-activity"></div>
+                    <div class="guest-title">具体描述:</div>
+                </div>
+                <h2 style="margin-top: 20px">注意！视频只支持：".wmv", ".avi", ".dat",".asf","mp4",".rm",".m4v",".3gp"格式,最多300MB</h2>
+                <h2 style="margin-bottom: 10px">图片只支持：".jpg",".png",".bmp",".gif"格式</h2>
+                <!--富文本编辑器-------------------------------->
+                <div id="editor-toolbar"></div>
+                <div id="editor-text-area" style="min-height: 500px"></div>
+                <!--END-------------------------------------->
+            </div>
+        </div>
+
+        <div class="layui-btn-container" style="margin-left: 44%;">
+            <button type="button" class="layui-btn"  onclick="dosubmit()" style="width: 200px" >原始按钮</button>
+        </div>
+
+        <!-- 引入 css -->
+        <link href="https://cdn.jsdelivr.net/npm/@wangeditor/editor@latest/dist/css/style.css" rel="stylesheet">
+
+        <!-- 引入 js -->
+        <script src="https://cdn.jsdelivr.net/npm/@wangeditor/editor@latest/dist/index.min.js"></script>
+        <input id="etype_input" name="Etype" type="hidden" th:value="${equipment.etype}">
+        <input id="richTxt_input" name="richTxt" type="hidden">
+        <!--        需要删除的图片-->
+        <input id="delImgs" name="deleteImgs" type="hidden">
+        <div class="layui-hide-md">
+            <input id="picture_img" name="picture_img" type="file">
+        </div>
+        <script th:inline="javascript">
+
+            const E = window.wangEditor
+            //init页面方法
+            $(function () {
+                initRichTxt();
+
+                //获得richTxt中全部的图片与视频url 用于提交时对比删除
+                let videos = window.editor.getElemsByType('video');
+                let imgs=window.editor.getElemsByType("image");
+
+                videos.forEach(v=>{successImgUrl.push(v.src)})
+                imgs.forEach(v=>{successImgUrl.push(v.src)})
+                console.log(successImgUrl)
+            })
+
+
+            //上传成功的图片列表
+            const successImgUrl=[];
+            const successVideoUrl=[];
+            function initRichTxt() {
+
+                // 切换语言
+                // const LANG = location.href.indexOf('lang=en') > 0 ? 'en' : 'zh-CN';
+                // E.i18nChangeLanguage(LANG)
+
+                //图片上传配置
+                var uploadImageConfig= {
+                    fieldName: 'richTxtImg',
+                    base64LimitSize:0,// 1M 以下插入 base64
+                    server:'/Files/Equipment_img_FileUpload',
+                    // 上传之前触发
+                    onBeforeUpload(file) {
+                        // file 选中的文件，格式如 { key: file }
+                        return file
+                        // 可以 return
+                        // 1. return file 或者 new 一个 file ，接下来将上传
+                        // 2. return false ，不上传这个 file
+                    },
+                    // 上传进度的回调函数
+                    onProgress(progress) {
+                        // progress 是 0-100 的数字
+                        console.log('progress', progress)
+
+                    },
+                    // 单个文件上传成功之后
+                    onSuccess(file, res) {
+                        layer.msg('上传成功');
+                        console.log(`${file.name} 上传成功`, res)
+                        successImgUrl.push(res.data.alt);
+                    },
+                    // 单个文件上传失败
+                    onFailed(file, res) {
+                        console.log(`${file.name} 上传失败`, res)
+                    },
+                    // 上传错误，或者触发 timeout 超时
+                    onError(file, err, res) {
+                        console.log(`${file.name} 上传出错`, err, res)
+                        layer.msg('上传出错:'+res);
+                    },
+                }
+                //视频上传配置
+                var uploadVideo={
+                    server: '/Files/Equipment_video_FileUpload',
+                    // form-data fieldName ，默认值 'wangeditor-uploaded-video'
+                    fieldName: 'equipment_video',
+
+                    // 单个文件的最大体积限制，默认为 10M
+                    maxFileSize: 300 * 1024 * 1024, // 5M
+
+                    // 最多可上传几个文件，默认为 5
+                    maxNumberOfFiles: 1,
+
+                    // 选择文件时的类型限制，默认为 ['video/*'] 。如不想限制，则设置为 []
+                    allowedFileTypes: ['video/*'],
+
+                    // 将 meta 拼接到 url 参数中，默认 false
+                    metaWithUrl: false,
+
+                    // 超时时间，默认为 30 秒
+                    timeout: 15 * 1000, // 15 秒
+                    onBeforeUpload(file) {
+                        // file 选中的文件，格式如 { key: file }
+                        return file
+                    },
+                    // 上传进度的回调函数
+                    onProgress(progress) {
+                        // progress 是 0-100 的数字
+                        console.log('progress', progress)
+                    },
+                    // 单个文件上传成功之后
+                    onSuccess(file, res) {
+                        layer.msg('上传成功');
+                        successVideoUrl.push(res.data.url);
+                        console.log(`${file.name} 上传成功`, res);
+                    },
+                    // 单个文件上传失败
+                    onFailed(file, res) {
+                        layer.msg('上传失败');
+                        console.log(`${file.name} 上传失败`, res)
+                    },
+                    // 上传错误，或者触发 timeout 超时
+                    onError(file, err, res) {
+                        console.log(`${file.name} 上传出错`, err, res)
+                        layer.msg('上传出错:'+res);
+                    },
+                }
+
+                window.editor = E.createEditor({
+                    selector: '#editor-text-area',
+                    html: '[[${equipment.richTxt}]]',
+                    config: {
+                        placeholder: '这里编辑装备具体描述、视频、图片',
+                        MENU_CONF: {
+                            uploadImage: uploadImageConfig,
+                            uploadVideo:uploadVideo
+                        },
+                        onChange(editor) {
+                        }
+                    }
+                })
+
+                window.toolbar = E.createToolbar({
+                    editor,
+                    selector: '#editor-toolbar',
+                    config: {}
+                })
+            }
+
+            function dosubmit() {
+                let name_val = $('#input_name').val();
+                let describe_val = $('#input_describe').val();
+                let achieving_val = $('#input_achieving').val();
+                let etype_val=$('#etype_input').val();
+                //var files = $("#upload_file")[0].files;
+
+                var rich_html = editor.getHtml();
+                $('#richTxt_input').val(rich_html)
+                console.log(rich_html)
+                if (name_val == null || describe_val == null || achieving_val == null ||etype_val==null||etype_val.trim()==''
+                    || name_val.trim() == "" || describe_val.trim() == "" || achieving_val.trim() == ""
+
+                ) {
+                    layer.open({
+                        title: '提示'
+                        , content: '请先将内容填充完整~'
+                    });
+                    return;
+                }
+
+                //提交数据前先收集被删除的图片！！！！
+                var imgs = editor.getElemsByType("image")
+                var videos = editor.getElemsByType("video")
+                usedImgList=[]
+                usedVideoList=[]
+
+                for (let i=0;i<imgs.length;i++){
+                    let alt = $(imgs[i]).attr('alt');
+                    usedImgList.push(alt)
+                }
+
+                for (let i=0;i<videos.length;i++){
+                    let alt = videos[i].src;
+                    usedVideoList.push(alt)
+                }
+
+                var filterList = successImgUrl.filter(item=>!usedImgList.includes(item));
+                var filterList_Video=successVideoUrl.filter(item=>!usedVideoList.includes(item));
+                //需要删除的文件
+                filterList=filterList.concat(filterList_Video);
+
+                let deleteImgs="";
+
+                for (let i=0;i<filterList.length;i++){
+                    //使用`_`分割
+                    deleteImgs+= deleteImgs+filterList[i]+"`_`";
+                }
+                $("#delImgs").val(deleteImgs);
+                //数据通过校验证，提交数据
+                $('#subForm').submit();
+
+            }
+            function noRepeat6(arr){
+                var newArr = [];
+                for(var i = 0; i < arr.length; i++){
+                    if(newArr.indexOf(arr[i]) == -1){
+                        newArr.push(arr[i]);
+                    }
+                }
+                return newArr;
+            }
+            function setEtype(typeId) {
+                $("#etype_input").val($('#etype_select').val());
+            }
+
+        </script>
+    </div>
+</form>
+<!--返回修改数据是否成功-->
+<th:block th:if="${update_success} != null">
+
+    <script th:inline="javascript">
+        var addone=[[${update_success}]];
+        if (addone==true){
+            layer.msg("修改数据成功")
+        }else{
+            layer.msg("修改数据失败")
+        }
+    </script>
+</th:block>
+</body>
+</html>

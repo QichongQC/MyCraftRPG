@@ -1,6 +1,7 @@
 package qc.MyCraft.Aspects.AspectClasses_MVC;
 
 
+import Common.Template;
 import Common.ThreadLocalUtils;
 import Common.UserManager;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -13,8 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import qc.MyCraft.Aspects.AspectsAnnotation.CheckUserStatusAnno;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 
 @Aspect
@@ -29,28 +29,24 @@ public class CheckUserStatus {
 
     @Around("execution(* qc.MyCraft.Controller.*.*(..))")
     public Object Around(ProceedingJoinPoint joinPoint) throws Throwable {
+        //TODO 后门
+        return  joinPoint.proceed();
 
-        Signature signature = joinPoint.getSignature();
-        MethodSignature methodSignature = (MethodSignature) signature;
-        Method method = methodSignature.getMethod();
-        CheckUserStatusAnno annotation = method.getAnnotation(CheckUserStatusAnno.class);
-        //没有注解就pass
-        if (annotation == null){
-            return joinPoint.proceed();
-        }
 
-        //从线程工具中拿到request
-        HttpServletResponse response = ThreadLocalUtils.getResponse();
-        Object userStatus = UserManager.getUserStatus(ThreadLocalUtils.getSession());
-        if (userStatus!=null){
-            try {
-                response.sendRedirect("/loginAdmin");
-                response.flushBuffer();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
+//        Signature signature = joinPoint.getSignature();
+//        MethodSignature methodSignature = (MethodSignature) signature;
+//        Method method = methodSignature.getMethod();
+//        CheckUserStatusAnno annotation = method.getAnnotation(CheckUserStatusAnno.class);
+//        HttpServletRequest request = ThreadLocalUtils.getRequest();
+//
+//        //没有注解就pass  或者有用户状态
+//        if (annotation == null || UserManager.getUserStatus(request.getSession())!=null){
+//            return (ModelAndView) joinPoint.proceed();
+//        }
+//
+//        ModelAndView view=Template.getTemplate("index","LoginAdmin","进入后台");
+//        view.addObject("error_msg","没登录你访问你🐎呢？");
+//        return view;
     }
 
 }

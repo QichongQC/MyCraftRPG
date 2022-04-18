@@ -4,21 +4,21 @@
 <!-- namespace指用户自定义的命名空间。 -->
 <mapper namespace="qc.MyCraft.dao.Equiment">
     <!--开启二级缓存-->
-    <cache eviction="FIFO" readOnly="true"/>
+    <cache eviction="FIFO" readOnly="true"  flushInterval="60000"/>
 
     <select id="getEquimentListBySearch" resultType="qc.MyCraft.Models.BaseModels.Equiment" >
         select * from Equiment
         <where>
-            <if test="etype != null">
+            <if test="etype != null and etype != ''">
                 etype = ${etype}
             </if>
-            <if test="name != null">
+            <if test="name != null and name != ''">
                and name like '%${name}%'
             </if>
-            <if test="describe != null">
+            <if test="describe != null and describe != ''">
                 and `describe` like '%${describe}%'
             </if>
-            <if test="achieving != null">
+            <if test="achieving != null and achieving != ''">
                 and achieving like '%${achieving}%'
             </if>
         </where>
@@ -28,18 +28,33 @@
     <select id="getRecordCount" resultType="INT">
         select count(*) from Equiment
         <where>
-            <if test="etype != null">
-                etype = ${etype}
+            <if test="etype!=null and etype!=''">
+                etype = #{etype}
             </if>
-            <if test="name != null">
+            <if test="name != null and name!=''">
                 and name like '%${name}%'
             </if>
-            <if test="describe != null">
+            <if test="describe != null and describe!=''">
                 and `describe` like '%${describe}%'
             </if>
-            <if test="achieving != null">
+            <if test="achieving != null and achieving !=''">
                 and achieving like '%${achieving}%'
             </if>
         </where>
     </select>
+
+
+    <update id="editEquiment" parameterType="qc.MyCraft.Models.BaseModels.Equiment">
+        update Equiment
+        set
+            etype=#{etype},
+            <if test="picture != null and picture != '' ">
+                picture=#{picture},
+            </if>
+            `name`=#{name},
+            `describe`=#{describe},
+            achieving=#{achieving},
+            richTxt=#{richTxt}
+        where id=${id}
+    </update>
 </mapper>

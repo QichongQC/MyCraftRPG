@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${title}"></title>
-    <link rel="stylesheet" href="../../static/js/layui-v2.6.8/layui/css/layui.css">
-    <script src="../../static/js/layui-v2.6.8/layui/layui.js"></script>
+    <link rel="stylesheet" href="/static/js/layui-v2.6.8/layui/css/layui.css">
+    <script src="/static/js/layui-v2.6.8/layui/layui.js"></script>
 
 </head>
 <body>
 <div class="layui-header header header-doc" style="background-color:#393D49;">
     <div  class="layui-container">
         <ul class="layui-nav" lay-filter="">
-            <A th:href="'/'" class="" style="margin-top: 0.5px;background-size: contain;background-repeat:no-repeat;float:left;z-index: 100;height: 58px;width: 300px;background-image: url('../../static/pageImage/logo.png')"></A>
+            <A th:href="'/'" class="" style="margin-top: 0.5px;background-size: contain;background-repeat:no-repeat;float:left;z-index: 100;height: 58px;width: 300px;background-image: url('/static/pageImage/logo.png')"></A>
             <li th:class="${mainPage=='equipmen'}?'layui-nav-item layui-this':'layui-nav-item'"  ><a href="/">装备</a></li>
-            <li  class="layui-nav-item" style="float: right"><a href="/loginAdmin">后台</a></li>
+            <li  th:class="${mainPage=='AdminHome'}?'layui-nav-item layui-this':'layui-nav-item'" style="float: right"><a href="/loginAdmin">后台</a></li>
         </ul>
 
     </div>
