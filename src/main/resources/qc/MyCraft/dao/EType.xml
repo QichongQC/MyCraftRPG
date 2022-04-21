@@ -3,8 +3,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace指用户自定义的命名空间。 -->
 <mapper namespace="qc.MyCraft.dao.EType">
-    <!--开启二级缓存-->
-    <cache eviction="FIFO" readOnly="true"  flushInterval="60000"/>
 
     <select id="getEtypeListBySearch"  resultType="qc.MyCraft.Models.BaseModels.EType">
         select * from EType

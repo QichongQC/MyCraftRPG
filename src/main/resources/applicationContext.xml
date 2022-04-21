@@ -28,18 +28,68 @@
         <property name="url" value="jdbc:mysql:///mycraftrpg?useUnicode=true&amp;characterEncoding=UTF-8" />
         <property name="username" value="root" />
         <property name="password" value="qiujiamin233" />
-
-    </bean>
-    <!-- 配置SqlSession的工厂 -->
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" >
-        <property name="dataSource" ref="dataSource" />
-        <!--配置单独的mybatis配置路径-->
-        <property name="configLocation" value="classpath:SqlMapConfig.xml"></property>
     </bean>
 
-    <!-- 配置扫描dao的包 -->
+
+    <!-- mabatis-spring提供的功能     配置扫描dao的包 -->
     <bean id="mapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="qc.MyCraft.dao"/>
+        <property name="basePackage" value="qc.MyCraft.dao" />
     </bean>
 
+
+
+    <!--mabatis-spring提供的功能 配置SqlSession的工厂 -->
+<!--    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" >
+        <property name="dataSource" ref="dataSource" />
+        &lt;!&ndash;配置单独的mybatis配置路径&ndash;&gt;
+        <property name="configLocation" value="classpath:SqlMapConfig.xml"></property>
+    </bean>-->
+
+
+
+    <!--    mybatis-plus配置中的sqlSesssionFactory-->
+    <!-- 此处使用的是MybatisSqlSessionFactoryBean -->
+    <bean
+            class="com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean">
+
+
+        <!-- 设置MyBatis配置文件的路径（可以不设置） -->
+        <property name="configLocation" value="classpath:SqlMapConfig.xml">
+        </property>
+        <!-- 设置数据源 -->
+        <property name="dataSource" ref="dataSource"></property>
+        <!-- 设置类型别名所对应的包 -->
+        <property name="typeAliasesPackage" value="qc.MyCraft.Models"></property>
+
+        <!--配置插件-->
+        <property name="plugins">
+            <array>
+                <ref bean="mybatisPlusInterceptor"></ref>
+            </array>
+        </property>
+        <!--
+        设置映射文件的路径
+        若映射文件所在路径和mapper接口所在路径一致，则不需要设置
+        -->
+        <!--
+        <property name="mapperLocations" value="classpath:mapper/*.xml">
+        </property>
+        -->
+
+    </bean>
+    <!--配置MyBatis-Plus插件-->
+    <bean id="mybatisPlusInterceptor"
+          class="com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor">
+        <property name="interceptors">
+            <list>
+                <ref bean="paginationInnerInterceptor"></ref>
+            </list>
+        </property>
+    </bean>
+    <!--配置MyBatis-Plus分页插件的bean-->
+    <bean id="paginationInnerInterceptor"
+          class="com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor">
+    <!--设置数据库类型-->
+    <property name="dbType" value="MYSQL"></property>
+    </bean>
 </beans>

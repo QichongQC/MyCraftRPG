@@ -5,8 +5,26 @@
     <title>Title</title>
     <link rel="stylesheet" href="/static/CSS/equiment_detail.css">
     <link href="/static/js/wangEditor/wangEditor.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/CSS/testHomeCSS2.css">
 </head>
 <body>
+
+<div th:if="${suit_equiment_list!=null}" class="toolbar-wrapper"  style="bottom: 650px;width: 300px">
+    <div class="left-slider-wrapper">
+        <a class="service-wrapper" href="/platform/feedbacklist.html" target="_blank">
+        <div class="service-icon"></div>
+        <div class="toolbar-title">同系列武器:</div>
+        <th:block  th:each="equimentItem: ${suit_equiment_list}">
+            <a  th:if="${equiment.id != equimentItem.id}"
+                    th:href="'/equiment_detail/'+${equimentItem.id}" class="toolbar-title"
+                style="line-height: 20px;color: deeppink"
+                th:text="${equimentItem.name}"></a>
+            <br th:if="${equiment.id != equimentItem.id}"/>
+        </th:block>
+    </a>
+    </div>
+</div>
+
 <div class="buyticket" style="height: 890px">
     <div class="bread-wrapper"><span><a href="#"></a></span> <span class="symbol"></span>
         <span><a th:href="'/?etype='+${equiment.etype}" th:text="${etype.typeName}"></a></span>
@@ -45,6 +63,20 @@
                     </li>
                 </ul>
             </div>
+            <th:block th:if="${suit!=null}">
+                <div class="login-show-wrapper">
+                    <ul class="clearfix" style="font-size: x-large">
+                        <li class="title" style="font-size: x-large">附属于套装：</li>
+                        <li class="tickets">
+                            <div class="announcement-item-desc">
+                                <a class="default-entry" th:href="'/Suit_Detail/'+${suit.id}"
+                                   th:text="${suit.name}"></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </th:block>
+
         </div>
     </div>
     <th:block th:if="${equiment.richTxt != '' && equiment.richTxt != null}">

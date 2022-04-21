@@ -3,23 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="../../static/CSS/equiment_detail.css" rel="stylesheet">
-    <link href="../../static/js/wangEditor/wangEditor.css" rel="stylesheet">
-    <script src="../../static/js/jquery.min.js"></script>
+    <link href="/static/CSS/equiment_detail.css" rel="stylesheet">
+    <link href="/static/js/wangEditor/wangEditor.css" rel="stylesheet">
+    <script src="/static/js/jquery.min.js"></script>
 </head>
 <body>
-
-<form method="post" id="subForm" action="/Admin/Equiment/Put" enctype="multipart/form-data">
+<form action="/Admin/Equiment/Put" class="layui-form" enctype="multipart/form-data" id="subForm" method="post">
     <div th:if="${field_errors}!=null" th:each="item,stat:${field_errors}">
         <h5 th:text="${stat.current.key}+':'+${stat.current.value}"></h5></div>
     <div class="buyticket" style="height: 890px">
-    <div class="bread-wrapper"><span><a href="#"></a></span> <span class="symbol"></span>
-    </div>
-    <!----详情页面----->
-    <div class="layui-hide">
-        <input accept="image/*,.jpeg" id="upload_file" name="pictrue_img" type="file"/>
-    </div>
-    <div class="whole-detail-info-wrapper">
+        <div class="bread-wrapper"><span><a href="#"></a></span> <span class="symbol"></span>
+        </div>
+        <!----详情页面----->
+        <div class="layui-hide">
+            <input accept="image/*,.jpeg" id="upload_file" name="pictrue_img" type="file"/>
+        </div>
+        <div class="whole-detail-info-wrapper">
         <div onclick="clearImg()" style="border:1px solid gray;width: 30px;height: 30px;line-height: 20px;margin-right: 20px;z-index: 10;font-size: 50px" >x</div>
         <div class="" id="select_file" onclick="selectFile()" style="font-size: xxx-large">
 
@@ -99,13 +98,39 @@
                     <li class="title" style="font-size: x-large">获取：</li>
                     <div class="layui-input-inline" style="width: 400PX">
                         <div class="layui-input-block" style="margin-left: 0">
-                            <textarea autocomplete="off" name="achieving" class="layui-input" id="input_achieving" placeholder="请输入获取途径"
+                            <textarea autocomplete="off" class="layui-input" id="input_achieving" name="achieving"
+                                      placeholder="请输入获取途径"
                                       required=""
                                       style="width: 688px;height: 131px" th:value="''"
                                       type="text"/></textarea>
                         </div>
                     </div>
                 </ul>
+            </div>
+            <div style="height: 10px"></div>
+            <div class="login-show-wrapper">
+                <div class="layui-inline">
+                    <label class="title" style="color: #99a2aa;font-size: x-large">套装： &nbsp</label>
+                    <div class="layui-input-inline">
+                        <select lay-search="" lay-verify="required" name="suitId" id="suitId">
+                            <option value="">直接选择或搜索选择</option>
+                            <th:block  th:each="suit :${suit_list}">
+                                <option th:value="${suit.id}" th:text="${suit.name}"></option>
+                            </th:block>
+                        </select>
+                        <div class="layui-form-select layui-form-selected">
+                            <div class="layui-select-title">
+                                <input class="layui-input" placeholder="直接选择或搜索选择" type="text"
+                                                                   value=""><i class="layui-edge"></i></div>
+                            <dl class="layui-anim layui-anim-upbit" style="">
+                                <dd class="layui-select-tips layui-hide" lay-value="" style="">直接选择或搜索选择</dd>
+                                <th:block  th:each="suit :${suit_list}">
+                                    <option th:value="${suit.id}" th:text="${suit.name}"></option>
+                                </th:block>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -141,10 +166,11 @@
         <div class="layui-hide-md">
             <input id="picture_img" name="picture_img" type="file">
         </div>
-    <script>
+    <script >
 
         $(function () {
             initRichTxt();
+
         })
         const E = window.wangEditor
 
@@ -263,6 +289,7 @@
             let name_val = $('#input_name').val();
             let describe_val = $('#input_describe').val();
             let achieving_val = $('#input_achieving').val();
+            setEtype()
             let etype_val=$('#etype_input').val();
             var files = $("#upload_file")[0].files;
 
@@ -320,7 +347,7 @@
             }
             return newArr;
         }
-        function setEtype(typeId) {
+        function setEtype() {
             $("#etype_input").val($('#etype_select').val());
         }
 
@@ -330,13 +357,15 @@
 <th:block th:if="${addone} != null">
 
     <script th:inline="javascript">
-        var addone=[[${addone}]];
-        if (addone==true){
+        var addone = [[${addone}]];
+        if (addone == true) {
             layer.msg("添加数据成功")
-        }else{
+        } else {
             layer.msg("添加数据失败")
         }
     </script>
 </th:block>
+
+<script src="/static/js/layui-v2.6.8/layui/layui.js"></script>
 </body>
 </html>

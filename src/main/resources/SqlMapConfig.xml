@@ -16,11 +16,17 @@
         <setting name="cacheEnabled" value="true"/>
         <!--设置查看mybatis的debug日志 需要和日志组件配合使用 -->
         <setting name="logImpl" value="STDOUT_LOGGING" />
+
+        <!--配置mybatis-plus的config -->
+        <setting name="mapUnderscoreToCamelCase" value="false"/>
     </settings>
 
     <typeHandlers>
         <!--<typeHandler handler="qc.proj.mybatis_TypeHandler.timestamp_TypeHandler"></typeHandler>-->
+
     </typeHandlers>
+
+
 
     <environments default="mysql">
         <environment id="mysql">
@@ -40,5 +46,6 @@
         <!-- 该包下所有的dao接口都可以使用 -->
         <!--<package name="qc.proj.dao"/>-->
     </mappers>
+
 
 </configuration>

@@ -1,11 +1,15 @@
 package qc.MyCraft.Models.BaseModels;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.sun.xml.internal.ws.developer.Serialization;
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-@Serialization
-public class EType {
+@TableName("etype")
+
+public class EType implements Serializable {
     String id;
     String typeName;
     String introduce;

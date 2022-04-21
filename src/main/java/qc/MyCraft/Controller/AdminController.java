@@ -17,9 +17,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import qc.MyCraft.Aspects.AspectsAnnotation.CheckUserStatusAnno;
 import qc.MyCraft.Models.BaseModels.Equiment;
+import qc.MyCraft.Models.BaseModels.Suit;
 import qc.MyCraft.Models.ControllerDTO.AdminControllerEquimentDTO;
+import qc.MyCraft.Models.ControllerDTO.AdminControllerSuitDTO;
 import qc.MyCraft.PathManager.StaticFilePath;
 import qc.MyCraft.Service.AdminHomeServices;
+import qc.MyCraft.Service.BaseImpls.SuitServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -45,6 +48,8 @@ public class AdminController {
     @Autowired
     WebApplicationContext webApplicationContext;
 
+    @Autowired
+    qc.MyCraft.Service.Suit suitService;
     @CheckUserStatusAnno
     @RequestMapping("/Home")
     public ModelAndView equiment(EquimentSearchModel equimentSearchModel,HttpServletRequest request){
@@ -69,33 +74,32 @@ public class AdminController {
         return view;
     }
 
-
     @CheckUserStatusAnno
     @GetMapping("/Equiment/Put")
     public ModelAndView equiment_addPage(){
         ModelAndView modelAndView=Template.getTemplate("index","AdminEquiment_ADD","添加装备");
 
-        modelAndView.addObject("etype_list",eTypeService.getAllEtype());
+        //处理view
+        adminHomeServices.handelEquiment_ADD(modelAndView);
         return modelAndView;
     }
+
+    @Autowired
+    qc.MyCraft.Service.Mybatis_plus_serviceDemo.ServicesEquimentImpl mp_equimentService;
 
     @CheckUserStatusAnno
     @PostMapping("/Equiment/Put")
     public ModelAndView add_equiment(HttpServletRequest request,  @Valid Equiment equiment,BindingResult bindingResult,
                                      MultipartFile pictrue_img, String deleteImgs) throws IOException {
-
         //获取数据
         ModelAndView view=Template.getTemplate("index","AdminEquiment_ADD","添加装备");
         view.addObject("etype_list",eTypeService.getAllEtype());
-
         //删除提交上来的多余图片
         if (deleteImgs!=null && !deleteImgs.trim().isEmpty()){
             //如果不为空就删除
             deleteImgs(deleteImgs,request);
         }
-
         String realPath=PathUtils.getStaticDir(request)+StaticFilePath.Admin_Equipment_Add_PictureImgs;
-
         //验证数据 错误列表
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
         Map<String, String> field_error_map = ValidateUtils.FieldErrorList_To_Map(fieldErrors);
@@ -116,8 +120,15 @@ public class AdminController {
         //如果数据都通过了校验
         equiment.setPicture(StaticFilePath.Admin_Equipment_Add_PictureImgs+saveResult);
 
-        int i = equimentService.addEquiment(equiment);
-        if (i==0){
+        //int i = equimentService.addEquiment(equiment);
+
+        if (equiment.getSuitId().trim().equals("")){
+            equiment.setSuitId(null);
+        }
+
+        boolean save = mp_equimentService.save(equiment);
+
+        if (!save){
             //添加失败
             Logger logger = LoggerFactory.getILoggerFactory().getLogger("AdminController.class");
             logger.error("添加Equiment失败：/Admin/Equiment/Put");
@@ -153,7 +164,6 @@ public class AdminController {
         return i;
     }
 
-
     @CheckUserStatusAnno
     @PostMapping("/Equiment/Delete/{id}")
     @ResponseBody
@@ -178,20 +188,18 @@ public class AdminController {
     @CheckUserStatusAnno
     @GetMapping("/Equiment/Update/{id}")
     public ModelAndView update_equiment(@PathVariable Integer id){
-        /*错误列表*/
-        Map<String,String> page_error_map=new HashMap<>();
-        if (id==null || id==0){
-            page_error_map.put("id","id不符合规范！");
-        }
         ModelAndView modelAndView=Template.getTemplate("index","AdminUpdate","修改装备");
-        modelAndView.addObject("etype_list",eTypeService.getAllEtype());
-        modelAndView.addObject("equipment",equimentService.getEquimentById(id));
+
+        adminHomeServices.handelUpdateEquiment_GET(modelAndView,id);
+
         return modelAndView;
     }
     @CheckUserStatusAnno
     @PostMapping("/Equiment/Update/{id}")
     @ResponseBody
-    public ModelAndView update_equiment(@PathVariable int id,HttpServletRequest request,  @Valid Equiment equiment,BindingResult bindingResult,
+    public ModelAndView update_equiment(@PathVariable int id,HttpServletRequest request,
+                                        @Valid Equiment equiment,
+                                        BindingResult bindingResult,
                                         MultipartFile pictrue_img, String deleteImgs){
         //获取数据
         ModelAndView view= update_equiment(id);
@@ -233,8 +241,12 @@ public class AdminController {
             equiment.setPicture(StaticFilePath.Admin_Equipment_Add_PictureImgs + saveResult);
         }
 
-        int i = equimentService.editEquiment(equiment);
-        if (i==0){
+        //int i = equimentService.editEquiment(equiment);
+        if (equiment.getSuitId().trim().equals("")){
+            equiment.setSuitId(null);
+        }
+        boolean b = mp_equimentService.updateById(equiment);
+        if (!b){
             //添加失败
             Logger logger = LoggerFactory.getILoggerFactory().getLogger("AdminController.class");
             logger.error("添加Equiment失败：/Admin/Equiment/Update");
@@ -246,4 +258,58 @@ public class AdminController {
         //设置重定向
         return view;
     }
+
+    @CheckUserStatusAnno
+    @PostMapping("/Suit/Delete/{id}")
+    @ResponseBody
+    public AdminControllerEquimentDTO del_suit(@PathVariable int id){
+        return adminHomeServices.handelSuit_DELETE(id);
+    }
+
+    @CheckUserStatusAnno
+    @PostMapping("/Suit/Put")
+    public @ResponseBody AdminControllerSuitDTO put_suit(HttpServletRequest request,
+                                                         MultipartFile pictrue_img,
+                                                         @Valid Suit suit,
+                                                         BindingResult bindingResult,
+                                                         String deleteImgs){
+
+        AdminControllerSuitDTO result=new AdminControllerSuitDTO();
+        //1.先进行删除
+        if (deleteImgs!=null && !deleteImgs.trim().isEmpty()){
+            //如果不为空就删除
+            deleteImgs(deleteImgs,request);
+        }
+
+        Map<String, String> errorMaps=null;
+        //如果数据类型有错误
+        if (bindingResult.hasErrors()){
+            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+            errorMaps = ValidateUtils.FieldErrorList_To_Map(fieldErrors);
+        }
+        if (pictrue_img==null || pictrue_img.isEmpty()){
+            errorMaps.put("picture","上传图片失败");
+        }
+        if (errorMaps.size()>0){
+            AdminControllerSuitDTO.Error error = result.new Error();
+            error.setErrorResult(errorMaps);
+            result.setError(error);
+            result.setStatus(0);
+            return result;
+        }
+
+        //添加数据
+        boolean save = suitService.save(suit);
+        if (save){
+            result.setStatus(1);
+            result.setMessage("删除数据成功");
+            return result;
+        }else {
+            result.setStatus(0);
+            AdminControllerSuitDTO.Error error = result.new Error();
+            error.setMessage("删除数据失败！");
+            return result;
+        }
+    }
+
 }

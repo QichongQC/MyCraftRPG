@@ -8,7 +8,7 @@
     <script src="/static/js/jquery.min.js"></script>
 </head>
 <body>
-<form method="post" id="subForm" th:action="'/Admin/Equiment/Update/'+${equipment.id}" enctype="multipart/form-data">
+<form method="post" id="subForm" class="layui-form" th:action="'/Admin/Equiment/Update/'+${equipment.id}" enctype="multipart/form-data">
     <div th:if="${field_errors}!=null" th:each="item,stat:${field_errors}">
         <h5 th:text="${stat.current.key}+':'+${stat.current.value}"></h5></div>
     <div class="buyticket" style="height: 890px">
@@ -49,7 +49,6 @@
                             reader.readAsDataURL(fileObj.files[0]);
                         });
                     }
-
                 </script>
             </div>
 
@@ -106,6 +105,30 @@
                             </div>
                         </div>
                     </ul>
+                </div>
+                <div class="login-show-wrapper">
+                    <div class="layui-inline">
+                        <label class="title" style="color: #99a2aa;font-size: x-large">套装： &nbsp</label>
+                        <div class="layui-input-inline">
+                            <select lay-search="" lay-verify="required" name="suitId" id="suitId">
+                                <option value="">直接选择或搜索选择</option>
+                                <th:block  th:each="suit :${suit_list}">
+                                    <option th:selected="${equipment.suitId==suit.id}" th:value="${suit.id}" th:text="${suit.name}"></option>
+                                </th:block>
+                            </select>
+                            <div class="layui-form-select layui-form-selected">
+                                <div class="layui-select-title">
+                                    <input class="layui-input" placeholder="直接选择或搜索选择" type="text"
+                                           value=""><i class="layui-edge"></i></div>
+                                <dl class="layui-anim layui-anim-upbit" style="">
+                                    <dd class="layui-select-tips layui-hide" lay-value="" style="">直接选择或搜索选择</dd>
+                                    <th:block  th:each="suit :${suit_list}">
+                                        <dd th:selected="${equipment.suitId==suit.id}" th:value="${suit.id}" th:text="${suit.name}"></dd>
+                                    </th:block>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -274,6 +297,7 @@
                 let name_val = $('#input_name').val();
                 let describe_val = $('#input_describe').val();
                 let achieving_val = $('#input_achieving').val();
+                setEtype()
                 let etype_val=$('#etype_input').val();
                 //var files = $("#upload_file")[0].files;
 
@@ -351,5 +375,6 @@
         }
     </script>
 </th:block>
+
 </body>
 </html>

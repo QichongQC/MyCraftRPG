@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="static/CSS/testHomeCss.css" rel="stylesheet">
+    <link href="/static/CSS/testHomeCSS2.css" rel="stylesheet">
+    <script src="/static/js/jquery.min.js"></script>
+</head>
+<body>
+<div class="layui-container">
+    <!--    //todo 后台3-->
+    <th:block th:if="${userStatus != null}">
+        <div class="layui-col-md2">
+            <div class="layui-panel site-menu" style="width: 235px;">
+                <ul class="layui-menu layui-menu-lg">
+                    <li class="layui-menu-item-group" lay-options="{type: 'group', isAllowSpread: true}"
+                        style="height: 1200px">
+                        <ul>
+                            <th:block th:each="item,state:${admin_modules}">
+                                <li th:class="${#request.getRequestURL().toString().contains(state.current.value)}?'layui-menu-item-checked':''"
+                                >
+                                    <div class="layui-menu-body-title">
+                                        <a th:href="${state.current.value}" th:text="${state.current.key}"></a>
+                                        <span class="layui-font-12 layui-font-gray"> </span>
+                                    </div>
+                                </li>
+                            </th:block>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </th:block>
+
+    <div class="layui-col-md9">
+        <form action="/Suit_Page" id="submitForm" method="get">
+            <input id="pageIndex" name="current" type="hidden"/>
+            <input id="input_name" name="name" th:value="${search_model.name}" type="hidden"/>
+        </form>
+        <div class="layui-col-md12" style="margin-top: 30px;margin-left: 80px">
+            <div class="layui-form">
+                <div class="layui-input-inline" style="width: 200px">
+                    <div class="layui-input-block" style="margin-left: 0">
+                        <input autocomplete="off" class="layui-input" id="input_suitName" name="name"
+                               placeholder="请输入套装名称" required="" th:value="${search_model.name}" type="text" value="">
+                    </div>
+                </div>
+                <div class="layui-input-inline">
+                    <div class="layui-input-block" style="margin-left: 0;right: 0px">
+                        <button class="layui-btn" onclick="doSearchWithResetPageIndex()" type="button">查询</button>
+                        <button class="layui-btn" onclick="clearSearchCondition()" style="background-color: indianred">
+                            清除查询条件
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <script>
+                function clearSearchCondition() {
+                    $('#input_suitName').val();
+                }
+
+                function doSearchWithResetPageIndex() {
+                    $('#pageIndex').val(1);
+                    $('#input_name').val($('#input_suitName').val())
+                    $('#submitForm').submit()
+                }
+
+                function skipToUpdate(id){
+                    window.location.href="/Suit_Detail/"+id;
+                }
+                function delete_equiment(id){
+                    let juxu=false;
+                    layer.open({
+                        title: '确定要删除该数据吗？'
+                        ,yes: function(index, layero){
+                            deleteAjax(id)
+                        },
+                        cancel:function (){
+                            return;
+                        }
+                    });
+                }
+                function deleteAjax(id){
+                    if (isNaN(id)){
+                        alert("捏🐎的，给我整活是吧？")
+                        return;
+                    }
+                    $.ajax({
+                        // url: 请求地址
+                        url: '/Admin/Suit/Delete/'+id,
+                        // type: 请求方式，默认是"GET"，常用的还有"POST"
+                        type: "POST",
+                        // dataType: 设置服务器返回的数据格式，常用的是 json 格式
+                        dataType: "JSON",
+                        // data: 设置发送给服务器的数据，没有参数不需设置
+
+                        // success: 设置请求成功后的回调函数
+                        success: function(response) {
+                            if (response.status==0){
+                                layer.msg("删除失败！")
+                            }else {
+                                layer.msg("删除成功，该数据会在一分钟内移除缓存。");
+                            }
+                        },
+                        // error: 设置请求失败后的回调函数
+                        error: function() {
+                            alert("请求失败！请联系管理员！");
+                        },
+                        // async：设置请求是否异步，默认是true，表示异步，一般不用写
+                        async: true
+                    })
+                }
+
+            </script>
+        </div>
+
+
+        <div class="recommendation" data-v-07ba051a="" data-v-50214cd5="" style="height: 1200px">
+            </style>
+            <th:block th:if="${suit_list} !=null and ${suit_list.size()>0}">
+                <div class="project-list-wrapper">
+                    <div class="project-list" th:each="suit :${suit_list}">
+                        <a class="project-list-item"
+                           style="width: 450px;margin-left: 60px"
+                           >
+                            <button class="layui-btn layui-btn-normal" data-method="offset" data-type="auto"
+                                    th:onclick="delete_equiment([[${suit.id}]])"
+                                    style="margin-left: 381px;position: absolute;z-index: 5">删除
+                            </button>
+                            <div class="project-list-item-img" th:inline="css" th:onclick="skipToUpdate([[${suit.id}]])"
+                                 th:style="'background-image:url('+${suit.picture}+')'"></div>
+                            <div class="project-list-item-detail" th:onclick="skipToUpdate([[${suit.id}]])">
+                                <div class="project-list-item-title"  style="-webkit-box-orient: vertical;"
+                                     th:text="${suit.name}"></div>
+                                <div class="project-list-item-time">
+                                    <div>
+                                        <div class="project-list-item-address">
+                                            <span class="venue-name-and-address" style="max-width: 230px"
+                                                  th:text="${suit.describe}"></span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+            </th:block>
+
+            <!-------------------------页码条---------------------------------------->
+
+
+            <th:block th:if="${suit_list!=null}">
+                <div class="whole-pagination-wrapper" style="width: 1100px">
+                    <div class="pagination-wrapper">
+                        <div th:class="${paging.current>1}?'arrow pagination-left-arrow ':'arrow pagination-left-arrow  disabled'"
+                             th:onclick="${paging.current>1}?'setPageIndex_bynum('+${paging.current-1}+')':''"></div>
+
+                        <div class="pagination">
+                            <th:block th:if="${paging.current-1>1}">
+                                <span class="pageNum" th:text="1"></span>
+                                <span class="pageNum">...</span>
+                            </th:block>
+                            <th:block th:each="i:${#numbers.sequence(paging.barStart,paging.barEnd)}">
+                                <span th:class="${paging.current==i}?'pageNum active':'pageNum'" th:text="${i}"></span>
+                            </th:block>
+                            <th:block th:if="${paging.barEnd<paging.pages}">
+                                <span class="pageNum">...</span>
+                                <span class="pageNum" th:text="${paging.pages}"></span>
+                            </th:block>
+                        </div>
+                        <div th:class="${paging.current<paging.pages}?'arrow pagination-right-arrow':'arrow pagination-right-arrow disabled'"
+                             th:onclick="${paging.current<paging.pages}?'setPageIndex_bynum('+${paging.current+1}+')':''"></div>
+                    </div>
+                </div>
+            </th:block>
+
+
+            <script>
+                $(function () {
+                    $('.pageNum').click(setPageIndex)
+                })
+
+                function setPageIndex(e) {
+                    num = e.target.innerText;
+                    //如果是数字
+                    if (isNaN(num)) {
+                        return
+                    }
+                    $('#pageIndex').val(num)
+                    doSearch()
+                }
+
+                function doSearch() {
+                    $('#submitForm').submit();
+                }
+
+                function setPageIndex_bynum(current) {
+                    $('#pageIndex').val(current);
+                    doSearch()
+                }
+            </script>
+            <div style="height: 80px"></div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

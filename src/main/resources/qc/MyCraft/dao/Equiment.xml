@@ -3,10 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace指用户自定义的命名空间。 -->
 <mapper namespace="qc.MyCraft.dao.Equiment">
-    <!--开启二级缓存-->
-    <cache eviction="FIFO" readOnly="true"  flushInterval="60000"/>
 
-    <select id="getEquimentListBySearch" resultType="qc.MyCraft.Models.BaseModels.Equiment" >
+    <select id="getEquimentListBySearch" resultType="qc.MyCraft.Models.BaseModels.Equiment" parameterType="Common.Search.EquimentSearchModel">
         select * from Equiment
         <where>
             <if test="etype != null and etype != ''">
@@ -20,6 +18,12 @@
             </if>
             <if test="achieving != null and achieving != ''">
                 and achieving like '%${achieving}%'
+            </if>
+            <if test="suitIds != null and suitIds.size()>0">
+                and
+                <foreach collection="suitIds" item="item" open="suitId in(" close=")" separator=",">
+                    ${item}
+                </foreach>
             </if>
         </where>
         limit ${start} , ${pageSize}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/CSS/equiment_detail.css">
+    <link href="/static/js/wangEditor/wangEditor.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/CSS/testHomeCSS2.css">
+</head>
+<body>
+
+<div class="buyticket" style="height: 890px">
+
+
+    <style>
+        .activity-info-body video{
+            max-width: 100%;
+        }
+    </style>
+    <!----详情页面----->
+    <div style="height: 30px"></div>
+    <div class="whole-detail-info-wrapper">
+        <div class="detail-img-icon no_pic"
+             th:style="'background-image: url('+${suit.picture}+');'"></div>
+
+        <div class="detail-info-wrapper">
+            <div style="height: 20px"></div>
+            <div class="product-info-name"><!----><h2 style="width: 167.266px;"> 套装名称：</h2>
+                <h2 style="font-weight: bolder;color: coral" class="title" th:text="${suit.name}"></h2>
+            </div> <!---->
+            <div style="height: 50px"></div>
+            <div class="login-show-wrapper">
+                <ul class="clearfix" style="font-size: x-large">
+                    <li class="title" style="font-size: x-large">描述：</li>
+                    <li class="tickets">
+                        <div class="vuene-info-content" style="font-size: x-large">
+                            <div class="vuene-name" th:text="${suit.describe}"></div>
+                        </div>
+                    </li>
+                </ul>
+
+            </div> <!---->
+
+        </div>
+    </div>
+    <th:block th:if="${suit.richTxt != '' && suit.richTxt != null}">
+        <div class="activity-info-wrapper ticket-system-container">
+            <div class="activity-info scroll-wrapper" STYLE="width: 100%">
+                <div class="activity-info-header">
+                    <div class="icon icon-activity"></div>
+                    <div class="guest-title">具体描述:</div>
+                </div>
+
+                <div class="activity-info-body" th:utext="${suit.richTxt}" >
+                </div>
+            </div>
+        </div>
+    </th:block>
+</div>
+</body>
+</html>

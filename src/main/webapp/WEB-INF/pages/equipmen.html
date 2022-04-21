@@ -13,242 +13,263 @@
         border: 1px solid red;
     }
 </style>
-<div class="layui-container">
-    <div class="layui-col-md3">
-        <div class="layui-panel site-menu" style="width: 235px;">
-            <ul class="layui-menu layui-menu-lg">
-                <li class="layui-menu-item-group" lay-options="{type: 'group', isAllowSpread: true}">
-                    <div class="layui-menu-body-title">
-                        近战武器
-                    </div>
-                    <hr>
-                    <ul>
-                        <th:block th:each="etype:${etype_list}">
-                            <li th:class="${searchModel.etype==etype.id}?'layui-menu-item-checked':''"
-                                th:if="${etype.TYPE=='0'}" th:onclick="setEtype(this,[[${etype.id}]])">
-                                <div class="layui-menu-body-title">
-                                    <span th:text="${etype.typeName}"></span>
-                                    <span class="layui-font-12 layui-font-gray"> </span>
-                                </div>
-                            </li>
-                        </th:block>
-                    </ul>
-                </li>
-                <li class="layui-menu-item-group" lay-options="{type: 'group', isAllowSpread: true}">
-                    <div class="layui-menu-body-title">
-                        防具
-                    </div>
-                    <hr>
-                    <ul>
-                        <th:block th:each="etype:${etype_list}">
-                            <li th:class="${searchModel.etype==etype.id}?'layui-menu-item-checked':''"
-                                th:if="${etype.TYPE=='1'}" th:onclick="setEtype(this,[[${etype.id}]])">
-                                <div class="layui-menu-body-title">
-                                    <span th:text="${etype.typeName}"> </span>
-                                    <span class="layui-font-12 layui-font-gray"> </span>
-                                </div>
-                            </li>
-                        </th:block>
-                    </ul>
-                </li>
-                <li class="layui-menu-item-group" lay-options="{type: 'group', isAllowSpread: true}">
-                    <div class="layui-menu-body-title">
-                        远程武器
-                    </div>
-                    <hr>
-                    <ul>
-                        <th:block th:each="etype:${etype_list}">
-                            <li th:class="${searchModel.etype==etype.id}?'layui-menu-item-checked':''"
-                                th:if="${etype.TYPE=='2'}" th:onclick="setEtype(this,[[${etype.id}]])">
-                                <div class="layui-menu-body-title">
-                                    <span th:text="${etype.typeName}"> </span>
-                                    <span class="layui-font-12 layui-font-gray"> </span>
-                                </div>
-                            </li>
-                        </th:block>
-                    </ul>
-                </li>
-                <li class="layui-menu-item-group" lay-options="{type: 'group', isAllowSpread: true}">
-                    <div class="layui-menu-body-title">
-                        杂项
-                    </div>
-                    <hr>
-                    <ul>
-                        <th:block th:each="etype:${etype_list}">
-                            <li th:class="${searchModel.etype==etype.id}?'layui-menu-item-checked':''"
-                                th:if="${etype.TYPE=='3'}" th:onclick="setEtype(this,[[${etype.id}]])">
-                                <div class="layui-menu-body-title">
-                                    <span th:text="${etype.typeName}"> </span>
-                                    <span class="layui-font-12 layui-font-gray"> </span>
-                                </div>
-                            </li>
-                        </th:block>
-                    </ul>
-                </li>
-            </ul>
+<div style="background-color: antiquewhite;width: 100%;height: 1780px;
+">
+
+    <div class="layui-container">
+        <div class="layui-col-md3">
+            <div class="layui-panel site-menu" style="width: 235px;">
+                <ul class="layui-menu layui-menu-lg">
+                    <li class="layui-menu-item-group" lay-options="{type: 'group', isAllowSpread: true}">
+                        <div class="layui-menu-body-title">
+                            近战武器
+                        </div>
+                        <hr>
+                        <ul>
+                            <th:block th:each="etype:${etype_list}">
+                                <li th:class="${searchModel.etype==etype.id}?'layui-menu-item-checked':''"
+                                    th:if="${etype.TYPE=='0'}" th:onclick="setEtype(this,[[${etype.id}]])">
+                                    <div class="layui-menu-body-title">
+                                        <span th:text="${etype.typeName}"></span>
+                                        <span class="layui-font-12 layui-font-gray"> </span>
+                                    </div>
+                                </li>
+                            </th:block>
+                        </ul>
+                    </li>
+                    <li class="layui-menu-item-group" lay-options="{type: 'group', isAllowSpread: true}">
+                        <div class="layui-menu-body-title">
+                            防具
+                        </div>
+                        <hr>
+                        <ul>
+                            <th:block th:each="etype:${etype_list}">
+                                <li th:class="${searchModel.etype==etype.id}?'layui-menu-item-checked':''"
+                                    th:if="${etype.TYPE=='1'}" th:onclick="setEtype(this,[[${etype.id}]])">
+                                    <div class="layui-menu-body-title">
+                                        <span th:text="${etype.typeName}"> </span>
+                                        <span class="layui-font-12 layui-font-gray"> </span>
+                                    </div>
+                                </li>
+                            </th:block>
+                        </ul>
+                    </li>
+                    <li class="layui-menu-item-group" lay-options="{type: 'group', isAllowSpread: true}">
+                        <div class="layui-menu-body-title">
+                            远程武器
+                        </div>
+                        <hr>
+                        <ul>
+                            <th:block th:each="etype:${etype_list}">
+                                <li th:class="${searchModel.etype==etype.id}?'layui-menu-item-checked':''"
+                                    th:if="${etype.TYPE=='2'}" th:onclick="setEtype(this,[[${etype.id}]])">
+                                    <div class="layui-menu-body-title">
+                                        <span th:text="${etype.typeName}"> </span>
+                                        <span class="layui-font-12 layui-font-gray"> </span>
+                                    </div>
+                                </li>
+                            </th:block>
+                        </ul>
+                    </li>
+                    <li class="layui-menu-item-group" lay-options="{type: 'group', isAllowSpread: true}">
+                        <div class="layui-menu-body-title">
+                            杂项
+                        </div>
+                        <hr>
+                        <ul>
+                            <th:block th:each="etype:${etype_list}">
+                                <li th:class="${searchModel.etype==etype.id}?'layui-menu-item-checked':''"
+                                    th:if="${etype.TYPE=='3'}" th:onclick="setEtype(this,[[${etype.id}]])">
+                                    <div class="layui-menu-body-title">
+                                        <span th:text="${etype.typeName}"> </span>
+                                        <span class="layui-font-12 layui-font-gray"> </span>
+                                    </div>
+                                </li>
+                            </th:block>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-    <div class="layui-col-md9">
-        <div class="layui-container">
-            <div class="layui-col-md12" style="margin-top: 30px">
-                <div class="layui-form">
-                    <div class="layui-input-inline" style="width: 200px">
-                        <div class="layui-input-block" style="margin-left: 0">
-                            <input th:value="${searchModel.name}" type="text" id="input_name" required=""
-                                   placeholder="请输入装备名称" autocomplete="off"
-                                   class="layui-input"/>
+        <div class="layui-col-md9">
+            <div class="layui-container">
+                <div class="layui-col-md12" style="margin-top: 30px">
+                    <div class="layui-form">
+                        <div class="layui-input-inline" style="width: 200px">
+                            <div class="layui-input-block" style="margin-left: 0">
+                                <input autocomplete="off" class="layui-input" id="input_suitName" placeholder="请输入套装名称"
+                                       required="" th:value="${searchModel.suitName}"
+                                       type="text"/>
+                            </div>
                         </div>
-                    </div>
-                    <div class="layui-input-inline" style="width: 200px">
-                        <div class="layui-input-block" style="margin-left: 0">
-                            <input th:value="${searchModel.describe}" type="text" id="input_describe" required=""
-                                   placeholder="请输入装备描述" autocomplete="off"
-                                   class="layui-input"/>
+                        <div class="layui-input-inline" style="width: 200px">
+                            <div class="layui-input-block" style="margin-left: 0">
+                                <input autocomplete="off" class="layui-input" id="input_name" placeholder="请输入装备名称"
+                                       required="" th:value="${searchModel.name}"
+                                       type="text"/>
+                            </div>
                         </div>
-                    </div>
-                    <div class="layui-input-inline" style="width: 200px">
-                        <div class="layui-input-block" style="margin-left: 0">
-                            <input th:value="${searchModel.achieving}" type="text" id="input_achieving" required=""
-                                   placeholder="请输入装备取得途径" autocomplete="off"
-                                   class="layui-input"/>
+                        <div class="layui-input-inline" style="width: 200px">
+                            <div class="layui-input-block" style="margin-left: 0">
+                                <input autocomplete="off" class="layui-input" id="input_describe" placeholder="请输入装备描述"
+                                       required="" th:value="${searchModel.describe}"
+                                       type="text"/>
+                            </div>
                         </div>
-                    </div>
-                    <div class="layui-input-inline">
-                        <div class="layui-input-block" style="margin-left: 0">
-                            <button class="layui-btn" onclick="doSearchWithResetPageIndex()">查询</button>
-                            <button class="layui-btn" style="background-color: indianred"
-                                    onclick="clearSearchCondition()">清除查询条件
-                            </button>
+                        <div class="layui-input-inline" style="width: 200px">
+                            <div class="layui-input-block" style="margin-left: 0">
+                                <input autocomplete="off" class="layui-input" id="input_achieving" placeholder="请输入装备取得途径"
+                                       required="" th:value="${searchModel.achieving}"
+                                       type="text"/>
+                            </div>
+                        </div>
+                        <div class="layui-input-inline">
+                            <div class="layui-input-block" style="margin-left: 0">
+                                <button class="layui-btn" onclick="doSearchWithResetPageIndex()">查询</button>
+                                <button class="layui-btn" onclick="clearSearchCondition()"
+                                        style="background-color: indianred">清除查询条件
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="project-list-wrapper">
-                <div class="project-list">
-                    <th:block th:each="equiment:${equiment_list}">
-                        <a class="project-list-item" style="width: 460px;" th:href="'/equiment_detail/'+${equiment.id}"  >
-                            <div class="project-list-item-img" th:inline="css"
-                                 th:style="'background-image:url(' + ${equiment.picture}+')'"></div>
-                            <div class="project-list-item-detail">
-                                <div class="project-list-item-title" style="-webkit-box-orient: vertical;"
-                                     th:text="${equiment.name}">
-                                </div>
-                                <div class="project-list-item-time">
-                                    <div>
-                                        <div class="project-list-item-address">
-                                            <span class="venue-name-and-address" style="max-width: 230px" th:text="${equiment.describe}"></span>
-                                        </div>
-                                        <div class="project-list-item-address"><span class="icon address-icon"></span>
-                                            <span class="city-name" style="max-width: 200px;white-space: nowrap;overflow: hidden;" th:text="${equiment.achieving}"></span>
+                <div class="project-list-wrapper">
+                    <div class="project-list">
+                        <th:block th:each="equiment:${equiment_list}">
+                            <a class="project-list-item" style="width: 460px;"
+                               th:href="'/equiment_detail/'+${equiment.id}">
+                                <div class="project-list-item-img" th:inline="css"
+                                     th:style="'background-image:url(' + ${equiment.picture}+')'"></div>
+                                <div class="project-list-item-detail">
+                                    <div class="project-list-item-title" style="-webkit-box-orient: vertical;"
+                                         th:text="${equiment.name}">
+                                    </div>
+                                    <div class="project-list-item-time">
+                                        <div>
+                                            <div class="project-list-item-address">
+                                                <span class="venue-name-and-address" style="max-width: 230px"
+                                                      th:text="${equiment.describe}"></span>
+                                            </div>
+                                            <div class="project-list-item-address"><span
+                                                    class="icon address-icon"></span>
+                                                <span class="city-name"
+                                                      style="max-width: 200px;white-space: nowrap;overflow: hidden;"
+                                                      th:text="${equiment.achieving}"></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </a>
-                    </th:block>
-                </div>
-            </div>
-        </div>
-        <!--页码条------------------------>
-        <th:block th:if="${equiment_list!=null}">
-            <div class="whole-pagination-wrapper">
-                <div class="pagination-wrapper">
-                    <div th:onclick="${searchModel.pageIndex>1}?'setPageIndex_bynum('+${searchModel.PageIndex-1}+')':''"
-                         th:class="${searchModel.pageIndex>1}?'arrow pagination-left-arrow ':'arrow pagination-left-arrow  disabled'"></div>
-
-                    <div class="pagination">
-                        <th:block th:if="${searchModel.barStart>1}">
-                            <span th:text="1" class="pageNum"></span>
-                            <span  class="pageNum">...</span>
-                        </th:block>
-                        <th:block th:each="i:${#numbers.sequence(searchModel.barStart,searchModel.barEnd)}">
-                            <span th:class="${searchModel.pageIndex==i}?'pageNum active':'pageNum'"  th:text="${i}"></span>
-                        </th:block>
-                        <th:block th:if="${searchModel.barEnd<searchModel.pageCount}">
-                            <span  class="pageNum">...</span>
-                            <span  th:text="${searchModel.pageCount}" class="pageNum"></span>
+                            </a>
                         </th:block>
                     </div>
-                    <div th:onclick="${searchModel.pageIndex<searchModel.pageCount}?'setPageIndex_bynum('+${searchModel.PageIndex+1}+')':''"
-                         th:class="${searchModel.pageIndex<searchModel.pageCount}?'arrow pagination-right-arrow':'arrow pagination-right-arrow disabled'"></div>
                 </div>
             </div>
-        </th:block>
-        <th:block th:if="${equiment_list==null}">
-            <h1 style="text-align: center;color:dimgray;font-size: xxx-large;font-weight: bolder">李在搜神魔？</h1>
-            <div class="hidden" style="height: 20px"></div>
-            <div style="height: 804px;background-color: white;background-image: url('../../static/pageImage/reqstion.png')"></div>
-        </th:block>
-        <!----------------------------------------------------页码条END------------------------>
-        <div class="layui-hide-lg">
-            <form id="submitForm" enctype="application/x-www-form-urlencoded" method="get" action="/">
-                <input th:value="${searchModel.etype}" id="Etype" name="Etype" type="hidden"/>
-                <input th:value="${searchModel.describe}" id="describe" name="describe" type="hidden"/>
-                <input th:value="${searchModel.achieving}" id="achieving" name="achieving" type="hidden"/>
-                <input th:value="${searchModel.name}" id="name" name="name" type="hidden"/>
-                <input th:value="${searchModel.pageIndex}" id="pageIndex" name="pageIndex" type="hidden"/>
-            </form>
-            <script type="application/javascript">
+            <!--页码条------------------------>
+            <th:block th:if="${equiment_list!=null}">
+                <div class="whole-pagination-wrapper">
+                    <div class="pagination-wrapper">
+                        <div th:class="${searchModel.pageIndex>1}?'arrow pagination-left-arrow ':'arrow pagination-left-arrow  disabled'"
+                             th:onclick="${searchModel.pageIndex>1}?'setPageIndex_bynum('+${searchModel.PageIndex-1}+')':''"></div>
 
-                $(function (e) {
-                    $('.pageNum').click(setPageIndex)
+                        <div class="pagination">
+                            <th:block th:if="${searchModel.barStart>1}">
+                                <span class="pageNum" th:text="1"></span>
+                                <span class="pageNum">...</span>
+                            </th:block>
+                            <th:block th:each="i:${#numbers.sequence(searchModel.barStart,searchModel.barEnd)}">
+                                <span th:class="${searchModel.pageIndex==i}?'pageNum active':'pageNum'"
+                                      th:text="${i}"></span>
+                            </th:block>
+                            <th:block th:if="${searchModel.barEnd<searchModel.pageCount}">
+                                <span class="pageNum">...</span>
+                                <span class="pageNum" th:text="${searchModel.pageCount}"></span>
+                            </th:block>
+                        </div>
+                        <div th:class="${searchModel.pageIndex<searchModel.pageCount}?'arrow pagination-right-arrow':'arrow pagination-right-arrow disabled'"
+                             th:onclick="${searchModel.pageIndex<searchModel.pageCount}?'setPageIndex_bynum('+${searchModel.PageIndex+1}+')':''"></div>
+                    </div>
+                </div>
+            </th:block>
+            <th:block th:if="${equiment_list==null}">
+                <h1 style="text-align: center;color:dimgray;font-size: xxx-large;font-weight: bolder">李在搜神魔？</h1>
+                <div class="hidden" style="height: 20px"></div>
+                <div style="height: 804px;background-color: white;background-image: url('../../static/pageImage/reqstion.png')"></div>
+            </th:block>
+            <!----------------------------------------------------页码条END------------------------>
+            <div class="layui-hide-lg">
+                <form action="/" enctype="application/x-www-form-urlencoded" id="submitForm" method="get">
+                    <input id="Etype" name="Etype" th:value="${searchModel.etype}" type="hidden"/>
+                    <input id="describe" name="describe" th:value="${searchModel.describe}" type="hidden"/>
+                    <input id="achieving" name="achieving" th:value="${searchModel.achieving}" type="hidden"/>
+                    <input id="name" name="name" th:value="${searchModel.name}" type="hidden"/>
+                    <input id="pageIndex" name="pageIndex" th:value="${searchModel.pageIndex}" type="hidden"/>
+                    <input id="suitName" name="suitName" th:value="${searchModel.suitName}" type="hidden"/>
+                </form>
+                <script type="application/javascript">
 
-                })
+                    $(function (e) {
+                        $('.pageNum').click(setPageIndex)
 
-                function toDetail(e){
+                    })
 
-                }
-                function setPageIndex_bynum(index){
-                    $('#pageIndex').val(index)
-                    doSearch()
-                }
+                    function toDetail(e) {
 
-                function setPageIndex(e){
-                    num=e.target.innerText;
-                    //如果是数字
-                    if(isNaN(num)){
-                        return
                     }
-                    $('#pageIndex').val(num)
-                    doSearch()
-                }
 
-                function setEtype(e, typeId) {
-                    $('#pageIndex').val(1)
-                    $("#Etype").val(typeId);
-                    doSearch()
-                }
+                    function setPageIndex_bynum(index) {
+                        $('#pageIndex').val(index)
+                        doSearch()
+                    }
 
-                function setSearchCondition() {
-                    $("#name").val($("#input_name").val());
-                    $("#describe").val($("#input_describe").val());
-                    $("#achieving").val($("#input_achieving").val());
+                    function setPageIndex(e) {
+                        num = e.target.innerText;
+                        //如果是数字
+                        if (isNaN(num)) {
+                            return
+                        }
+                        $('#pageIndex').val(num)
+                        doSearch()
+                    }
 
-                }
+                    function setEtype(e, typeId) {
+                        $('#pageIndex').val(1)
+                        $("#Etype").val(typeId);
+                        doSearch()
+                    }
 
-                function clearSearchCondition() {
-                    $("#Etype").val('');
-                    $("#name").val('');
-                    $("#describe").val('');
-                    $("#achieving").val('');
+                    function setSearchCondition() {
+                        $("#name").val($("#input_name").val());
+                        $("#describe").val($("#input_describe").val());
+                        $("#achieving").val($("#input_achieving").val());
+                        $("#suitName").val($('#input_suitName').val());
+                    }
 
-                    $("#input_name").val('');
-                    $("#input_describe").val('');
-                    $("#input_achieving").val('');
-                    doSearch()
-                }
+                    function clearSearchCondition() {
+                        $("#Etype").val('');
+                        $("#name").val('');
+                        $("#describe").val('');
+                        $("#achieving").val('');
 
-                function doSearch() {
-                    setSearchCondition();
-                    $('#submitForm').submit();
-                }
+                        $("#input_name").val('');
+                        $("#input_describe").val('');
+                        $("#input_achieving").val('');
+                        doSearch()
+                    }
 
-                function doSearchWithResetPageIndex(){
-                    $('#pageIndex').val(1)
-                    setSearchCondition();
-                    $('#submitForm').submit();
-                }
-            </script>
+                    function doSearch() {
+                        setSearchCondition();
+                        $('#submitForm').submit();
+                    }
+
+                    function doSearchWithResetPageIndex() {
+                        $('#pageIndex').val(1)
+                        setSearchCondition();
+                        $('#submitForm').submit();
+                    }
+                </script>
+            </div>
         </div>
+    </div>
+</div>
 </body>
 </html>

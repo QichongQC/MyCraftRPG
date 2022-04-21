@@ -15,5 +15,6 @@ public class ModulesModels {
      */
     static {
         module_urls.put("装备", "/Admin/Home");
+        module_urls.put("套装", "/Suit_Page");
     }
 }
